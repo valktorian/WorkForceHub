@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Caching.Memory;
 using Ocelot.Configuration.Repository;
 using Ocelot.DependencyInjection;
+using Ocelot.Provider.Polly;
 using Ocelot.Middleware;
 using Polly;
 using Polly.Extensions.Http;
@@ -42,7 +43,7 @@ builder.Services.Configure<IpRateLimitPolicies>(builder.Configuration.GetSection
 builder.Services.AddInMemoryRateLimiting();
 builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 builder.Services.AddWorkForceHubJwtAuthentication(builder.Configuration);
-builder.Services.AddOcelot(builder.Configuration);
+builder.Services.AddOcelot(builder.Configuration).AddPolly();
 builder.Services.AddSingleton<IFileConfigurationRepository>(new StaticOcelotConfigRepository(ocelotConfig));
 
 var app = builder.Build();

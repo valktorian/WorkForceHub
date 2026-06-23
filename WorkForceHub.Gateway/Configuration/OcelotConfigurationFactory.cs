@@ -77,7 +77,13 @@ public static class OcelotConfigurationFactory
             DownstreamHostAndPorts =
             [
                 new FileHostAndPort { Host = endpoint.Host, Port = endpoint.Port }
-            ]
+            ],
+            QoSOptions = new FileQoSOptions
+            {
+                ExceptionsAllowedBeforeBreaking = 3,
+                DurationOfBreak = 10000,
+                TimeoutValue = 5000
+            }
         };
 
         if (rateLimit is not null)
