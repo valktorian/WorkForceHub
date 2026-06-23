@@ -127,6 +127,18 @@ services:
       - minimal
       - full
 
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    restart: always
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    profiles:
+      - full
+
   workforcehub-gateway:
     build:
       context: .
@@ -139,6 +151,7 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - Jwt__SecretKey=${JWT_SECRET_KEY:-WorkForceHub-Local-Development-Secret-Key-2026}
       - Storage__InternalApiKey=${MEDIA_INTERNAL_API_KEY:-dev-media-service-key}
+      - Jaeger__OtlpEndpoint=http://jaeger:4317
     profiles:
       - minimal
       - full
@@ -154,6 +167,7 @@ services:
       - Jwt__SecretKey=${JWT_SECRET_KEY:-WorkForceHub-Local-Development-Secret-Key-2026}
       - ConnectionStrings__DefaultConnection=Host=postgres_write;Port=5432;Database=account_write;Username=${POSTGRES_USER:-admin};Password=${POSTGRES_PASSWORD:-admin}
       - Kafka__BootstrapServers=kafka:9092
+      - Jaeger__OtlpEndpoint=http://jaeger:4317
     depends_on:
       - postgres_write
       - kafka
@@ -171,6 +185,7 @@ services:
       - Jwt__SecretKey=${JWT_SECRET_KEY:-WorkForceHub-Local-Development-Secret-Key-2026}
       - ConnectionStrings__ReadDatabase=mongodb://${MONGO_INITDB_ROOT_USERNAME:-root}:${MONGO_INITDB_ROOT_PASSWORD:-root}@mongo_read:27017/admin?authSource=admin
       - Kafka__BootstrapServers=kafka:9092
+      - Jaeger__OtlpEndpoint=http://jaeger:4317
     depends_on:
       - mongo_read
       - kafka
@@ -188,6 +203,7 @@ services:
       - Jwt__SecretKey=${JWT_SECRET_KEY:-WorkForceHub-Local-Development-Secret-Key-2026}
       - ConnectionStrings__DefaultConnection=Host=postgres_write;Port=5432;Database=profile_write;Username=${POSTGRES_USER:-admin};Password=${POSTGRES_PASSWORD:-admin}
       - Kafka__BootstrapServers=kafka:9092
+      - Jaeger__OtlpEndpoint=http://jaeger:4317
     depends_on:
       - postgres_write
       - kafka
@@ -205,6 +221,7 @@ services:
       - Jwt__SecretKey=${JWT_SECRET_KEY:-WorkForceHub-Local-Development-Secret-Key-2026}
       - ConnectionStrings__ReadDatabase=mongodb://${MONGO_INITDB_ROOT_USERNAME:-root}:${MONGO_INITDB_ROOT_PASSWORD:-root}@mongo_read:27017/admin?authSource=admin
       - Kafka__BootstrapServers=kafka:9092
+      - Jaeger__OtlpEndpoint=http://jaeger:4317
     depends_on:
       - mongo_read
       - kafka
@@ -222,6 +239,7 @@ services:
       - Jwt__SecretKey=${JWT_SECRET_KEY:-WorkForceHub-Local-Development-Secret-Key-2026}
       - ConnectionStrings__DefaultConnection=Host=postgres_write;Port=5432;Database=time_write;Username=${POSTGRES_USER:-admin};Password=${POSTGRES_PASSWORD:-admin}
       - Kafka__BootstrapServers=kafka:9092
+      - Jaeger__OtlpEndpoint=http://jaeger:4317
     depends_on:
       - postgres_write
       - kafka
@@ -239,6 +257,7 @@ services:
       - Jwt__SecretKey=${JWT_SECRET_KEY:-WorkForceHub-Local-Development-Secret-Key-2026}
       - ConnectionStrings__ReadDatabase=mongodb://${MONGO_INITDB_ROOT_USERNAME:-root}:${MONGO_INITDB_ROOT_PASSWORD:-root}@mongo_read:27017/admin?authSource=admin
       - Kafka__BootstrapServers=kafka:9092
+      - Jaeger__OtlpEndpoint=http://jaeger:4317
     depends_on:
       - mongo_read
       - kafka
@@ -256,6 +275,7 @@ services:
       - Jwt__SecretKey=${JWT_SECRET_KEY:-WorkForceHub-Local-Development-Secret-Key-2026}
       - ConnectionStrings__DefaultConnection=Host=postgres_write;Port=5432;Database=evolution_write;Username=${POSTGRES_USER:-admin};Password=${POSTGRES_PASSWORD:-admin}
       - Kafka__BootstrapServers=kafka:9092
+      - Jaeger__OtlpEndpoint=http://jaeger:4317
     depends_on:
       - postgres_write
       - kafka
@@ -273,6 +293,7 @@ services:
       - Jwt__SecretKey=${JWT_SECRET_KEY:-WorkForceHub-Local-Development-Secret-Key-2026}
       - ConnectionStrings__ReadDatabase=mongodb://${MONGO_INITDB_ROOT_USERNAME:-root}:${MONGO_INITDB_ROOT_PASSWORD:-root}@mongo_read:27017/admin?authSource=admin
       - Kafka__BootstrapServers=kafka:9092
+      - Jaeger__OtlpEndpoint=http://jaeger:4317
     depends_on:
       - mongo_read
       - kafka
@@ -288,6 +309,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - Storage__InternalApiKey=${MEDIA_INTERNAL_API_KEY:-dev-media-service-key}
+      - Jaeger__OtlpEndpoint=http://jaeger:4317
     volumes:
       - media_uploads:/app/uploads
     profiles:
