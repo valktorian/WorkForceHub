@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Api.Base;
 using Microsoft.EntityFrameworkCore;
-
 using System.Text.Json;
 
 namespace Infrastructure.Api.Messaging;
@@ -34,17 +33,28 @@ public class OutboxPublisher : BackgroundService
 
                 foreach (var message in pending)
                 {
-                    var eventType = Type.GetType(message.EventType)!;
-                    var evt = (BaseEvent)JsonSerializer.Deserialize(message.Payload, eventType)!;
+                    try
+                    {
+                        var eventType = Type.GetType(message.EventType)!;
+                        var evt = (BaseEvent)JsonSerializer.Deserialize(message.Payload, eventType)!;
 
-                    await _producer.ProduceAsync(evt, message.Payload, "outbox");
+                        await _producer.ProduceAsync(evt, message.Payload, "outbox");
 
-                    message.PublishedAt = DateTime.UtcNow;
+                        message.PublishedAt = DateTime.UtcNow;
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Failed to publish outbox message {MessageId} of type {EventType}", message.Id, message.EventType);
+                    }
                 }
 
-                await dbContext.SaveChangesAsync(stoppingToken);
+                if (pending.Any(x => x.PublishedAt != null))
+                    await dbContext.SaveChangesAsync(stoppingToken);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Outbox publisher encountered an unexpected error");
+            }
 
             await Task.Delay(_interval, stoppingToken);
         }
