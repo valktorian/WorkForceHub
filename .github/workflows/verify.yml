@@ -4,11 +4,12 @@ on:
   pull_request:
   push:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout repository
@@ -27,3 +28,48 @@ jobs:
 
       - name: Build solution
         run: dotnet build WorkForceHub.sln --configuration Release --no-restore -nologo
+
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Install Aspire workload
+        run: dotnet workload install aspire
+
+      - name: Restore solution
+        run: dotnet restore WorkForceHub.sln
+
+      - name: Verify formatting
+        run: dotnet format WorkForceHub.sln --verify-no-changes --no-restore
+
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate Docker Compose file
+        run: docker compose --profile full config
+
+      - name: Build application images
+        run: >
+          docker compose --profile full build
+          workforcehub-gateway
+          account-service-command
+          account-service-query
+          profile-service-command
+          profile-service-query
+          time-service-command
+          time-service-query
+          evolution-service-command
+          evolution-service-query
+          media-service
