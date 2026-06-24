@@ -6,7 +6,7 @@ POSTGRES_CONTAINER := postgres_write
 POSTGRES_WAIT_RETRIES ?= 30
 POSTGRES_WAIT_SECONDS ?= 2
 
-.PHONY: up up-min up-fresh down kafka jaeger logs clean init-dbs wait-postgres reset reset-dbs build-gateway rebuild-gateway
+.PHONY: up up-min up-fresh down kafka jaeger logs clean init-dbs wait-postgres reset reset-dbs build-gateway rebuild-gateway verify
 
 up:
 	@echo " Starting all services (full)..."
@@ -100,3 +100,8 @@ reset:
 	$(MAKE) clean
 	$(COMPOSE) --profile full up -d
 	$(MAKE) init-dbs
+
+verify:
+	@echo " Restoring and building the solution with CI warning rules..."
+	CI=true dotnet restore WorkForceHub.sln
+	CI=true dotnet build WorkForceHub.sln --configuration Release --no-restore -nologo
