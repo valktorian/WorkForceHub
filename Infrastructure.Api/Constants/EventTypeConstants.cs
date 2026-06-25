@@ -53,4 +53,28 @@ public static class EventTypeConstants
             LeaveBalanceAdjusted
         ];
     }
+
+    public static class Evolution
+    {
+        public const string JobMovementUpserted = "EvolutionService.Command.Domain.Events.JobMovementUpsertedEvent";
+        public const string JobMovementDeleted = "EvolutionService.Command.Domain.Events.JobMovementDeletedEvent";
+        public const string SalaryChangeUpserted = "EvolutionService.Command.Domain.Events.SalaryChangeUpsertedEvent";
+        public const string SalaryChangeDeleted = "EvolutionService.Command.Domain.Events.SalaryChangeDeletedEvent";
+        public const string TrainingUpserted = "EvolutionService.Command.Domain.Events.TrainingUpsertedEvent";
+        public const string TrainingDeleted = "EvolutionService.Command.Domain.Events.TrainingDeletedEvent";
+        public const string RewardUpserted = "EvolutionService.Command.Domain.Events.RewardUpsertedEvent";
+        public const string RewardDeleted = "EvolutionService.Command.Domain.Events.RewardDeletedEvent";
+
+        public static readonly string[] QuerySubscriptions =
+        [
+            JobMovementUpserted,
+            JobMovementDeleted,
+            SalaryChangeUpserted,
+            SalaryChangeDeleted,
+            TrainingUpserted,
+            TrainingDeleted,
+            RewardUpserted,
+            RewardDeleted
+        ];
+    }
 }

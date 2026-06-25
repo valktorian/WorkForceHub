@@ -42,7 +42,18 @@
     { "key": "employee_id", "value": "11111111-1111-1111-1111-111111111111" },
     { "key": "time_entry_id", "value": "11111111-1111-1111-1111-111111111111" },
     { "key": "timesheet_id", "value": "11111111-1111-1111-1111-111111111111" },
-    { "key": "leave_request_id", "value": "11111111-1111-1111-1111-111111111111" }
+    { "key": "leave_request_id", "value": "11111111-1111-1111-1111-111111111111" },
+    { "key": "gateway_base_url", "value": "http://localhost:5240" },
+    { "key": "hr_email", "value": "john.doe@local.test" },
+    { "key": "hr_password", "value": "P@ssw0rd123!" },
+    { "key": "employee_email", "value": "evolution.employee@local.test" },
+    { "key": "employee_password", "value": "P@ssw0rd123!" },
+    { "key": "employee_account_id", "value": "11111111-1111-1111-1111-111111111111" },
+    { "key": "employee_profile_id", "value": "11111111-1111-1111-1111-111111111111" },
+    { "key": "jobMovementId", "value": "11111111-1111-1111-1111-111111111111" },
+    { "key": "salaryChangeId", "value": "11111111-1111-1111-1111-111111111111" },
+    { "key": "trainingId", "value": "11111111-1111-1111-1111-111111111111" },
+    { "key": "rewardId", "value": "11111111-1111-1111-1111-111111111111" }
   ],
   "item": [
     {
@@ -853,6 +864,688 @@
               "path": [ "api", "leave-types" ]
             }
           }
+        }
+      ]
+    },
+    {
+      "name": "EvolutionService",
+      "item": [
+        {
+          "name": "Evolution Setup",
+          "item": [
+            {
+              "name": "Login As HR",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const body = pm.response.json();",
+                      "const token = body.accessToken || body.AccessToken || '';",
+                      "const accountId = body.accountId || body.AccountId || '';",
+                      "const email = body.email || body.Email || '';",
+                      "if (token) pm.collectionVariables.set('jwt_token', token);",
+                      "if (accountId) pm.collectionVariables.set('account_id', accountId);",
+                      "if (email) pm.collectionVariables.set('hr_email', email);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "noauth" },
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{hr_email}}\",\n  \"password\": \"{{hr_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{account_command_base_url}}/api/auth/login",
+                  "host": [ "{{account_command_base_url}}" ],
+                  "path": [ "api", "auth", "login" ]
+                }
+              }
+            },
+            {
+              "name": "Create Employee Account",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const body = pm.response.json();",
+                      "const accountId = body.accountId || body.AccountId || body.id || body.Id || '';",
+                      "const email = body.email || body.Email || '';",
+                      "if (accountId) pm.collectionVariables.set('employee_account_id', accountId);",
+                      "if (email) pm.collectionVariables.set('employee_email', email);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "noauth" },
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{employee_email}}\",\n  \"password\": \"{{employee_password}}\",\n  \"firstName\": \"Evo\",\n  \"lastName\": \"Employee\",\n  \"role\": \"Employee\"\n}"
+                },
+                "url": {
+                  "raw": "{{account_command_base_url}}/api/accounts",
+                  "host": [ "{{account_command_base_url}}" ],
+                  "path": [ "api", "accounts" ]
+                }
+              }
+            },
+            {
+              "name": "Create Employee Profile",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const body = pm.response.json();",
+                      "const profileId = body.id || body.profileId || body.Id || body.ProfileId || '';",
+                      "if (profileId) {",
+                      "  pm.collectionVariables.set('employee_profile_id', profileId);",
+                      "  pm.collectionVariables.set('employee_id', profileId);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeNumber\": \"EMP-EVO-1001\",\n  \"firstName\": \"Evo\",\n  \"lastName\": \"Employee\",\n  \"workEmail\": \"evolution.employee@workforcehub.local\",\n  \"personalEmail\": \"{{employee_email}}\",\n  \"phoneNumber\": \"+212633333333\",\n  \"address\": \"Casablanca, Morocco\",\n  \"dateOfBirth\": \"1999-04-12T00:00:00Z\",\n  \"jobTitle\": \"HR Assistant\",\n  \"department\": \"Human Resources\",\n  \"managerProfileId\": null,\n  \"employmentType\": \"FullTime\",\n  \"hireDate\": \"2026-04-01T00:00:00Z\",\n  \"organizationRole\": \"Employee\",\n  \"employmentStatus\": \"Active\",\n  \"accountId\": \"{{employee_account_id}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{profile_command_base_url}}/api/profiles",
+                  "host": [ "{{profile_command_base_url}}" ],
+                  "path": [ "api", "profiles" ]
+                }
+              }
+            },
+            {
+              "name": "Link Employee Account",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accountId\": \"{{employee_account_id}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{profile_command_base_url}}/api/profiles/{{employee_profile_id}}/link-account",
+                  "host": [ "{{profile_command_base_url}}" ],
+                  "path": [ "api", "profiles", "{{employee_profile_id}}", "link-account" ]
+                }
+              }
+            },
+            {
+              "name": "Login As Employee",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const body = pm.response.json();",
+                      "const token = body.accessToken || body.AccessToken || '';",
+                      "const accountId = body.accountId || body.AccountId || '';",
+                      "const email = body.email || body.Email || '';",
+                      "if (token) pm.collectionVariables.set('jwt_token', token);",
+                      "if (accountId) pm.collectionVariables.set('employee_account_id', accountId);",
+                      "if (email) pm.collectionVariables.set('employee_email', email);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "noauth" },
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{employee_email}}\",\n  \"password\": \"{{employee_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{account_command_base_url}}/api/auth/login",
+                  "host": [ "{{account_command_base_url}}" ],
+                  "path": [ "api", "auth", "login" ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Evolution HR Flow",
+          "item": [
+            {
+              "name": "Login As HR",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const body = pm.response.json();",
+                      "const token = body.accessToken || body.AccessToken || '';",
+                      "const accountId = body.accountId || body.AccountId || '';",
+                      "const email = body.email || body.Email || '';",
+                      "if (token) pm.collectionVariables.set('jwt_token', token);",
+                      "if (accountId) pm.collectionVariables.set('account_id', accountId);",
+                      "if (email) pm.collectionVariables.set('hr_email', email);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "noauth" },
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{hr_email}}\",\n  \"password\": \"{{hr_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{account_command_base_url}}/api/auth/login",
+                  "host": [ "{{account_command_base_url}}" ],
+                  "path": [ "api", "auth", "login" ]
+                }
+              }
+            },
+            {
+              "name": "Create Job Movement",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const body = pm.response.json();",
+                      "const id = body.id || body.Id || (body.data && body.data.id) || (body.data && body.data.Id) || (body.Data && body.Data.id) || (body.Data && body.Data.Id) || '';",
+                      "if (id) pm.collectionVariables.set('jobMovementId', id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeId\": \"{{employee_id}}\",\n  \"previousJobTitle\": \"HR Assistant\",\n  \"newJobTitle\": \"HR Specialist\",\n  \"previousDepartment\": \"Human Resources\",\n  \"newDepartment\": \"People Operations\",\n  \"effectiveDate\": \"2026-05-01T00:00:00Z\",\n  \"reason\": \"Promotion after annual review\",\n  \"comment\": \"Promoted to handle onboarding and people operations.\"\n}"
+                },
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/job-movements",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "job-movements" ]
+                }
+              }
+            },
+            {
+              "name": "Get All Job Movements",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/job-movements?page=1&pageSize=20",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "job-movements" ],
+                  "query": [
+                    { "key": "page", "value": "1" },
+                    { "key": "pageSize", "value": "20" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Job Movement By Id",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/job-movements/{{jobMovementId}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "job-movements", "{{jobMovementId}}" ]
+                }
+              }
+            },
+            {
+              "name": "Get Job Movements By Employee",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/job-movements/employee/{{employee_id}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "job-movements", "employee", "{{employee_id}}" ]
+                }
+              }
+            },
+            {
+              "name": "Update Job Movement",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeId\": \"{{employee_id}}\",\n  \"previousJobTitle\": \"HR Assistant\",\n  \"newJobTitle\": \"Senior HR Specialist\",\n  \"previousDepartment\": \"Human Resources\",\n  \"newDepartment\": \"Talent Management\",\n  \"effectiveDate\": \"2026-05-15T00:00:00Z\",\n  \"reason\": \"Expanded responsibilities\",\n  \"comment\": \"Updated after role scope was extended.\"\n}"
+                },
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/job-movements/{{jobMovementId}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "job-movements", "{{jobMovementId}}" ]
+                }
+              }
+            },
+            {
+              "name": "Delete Job Movement",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/job-movements/{{jobMovementId}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "job-movements", "{{jobMovementId}}" ]
+                }
+              }
+            },
+            {
+              "name": "Create Salary Change",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const body = pm.response.json();",
+                      "const id = body.id || body.Id || (body.data && body.data.id) || (body.data && body.data.Id) || (body.Data && body.Data.id) || (body.Data && body.Data.Id) || '';",
+                      "if (id) pm.collectionVariables.set('salaryChangeId', id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeId\": \"{{employee_id}}\",\n  \"previousSalary\": 8500,\n  \"newSalary\": 9800,\n  \"currency\": \"EUR\",\n  \"effectiveDate\": \"2026-06-01T00:00:00Z\",\n  \"reason\": \"Annual salary review\",\n  \"comment\": \"Increase aligned with new responsibilities.\"\n}"
+                },
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/salary-changes",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "salary-changes" ]
+                }
+              }
+            },
+            {
+              "name": "Get All Salary Changes",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/salary-changes?page=1&pageSize=20",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "salary-changes" ],
+                  "query": [
+                    { "key": "page", "value": "1" },
+                    { "key": "pageSize", "value": "20" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Salary Change By Id",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/salary-changes/{{salaryChangeId}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "salary-changes", "{{salaryChangeId}}" ]
+                }
+              }
+            },
+            {
+              "name": "Get Salary Changes By Employee",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/salary-changes/employee/{{employee_id}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "salary-changes", "employee", "{{employee_id}}" ]
+                }
+              }
+            },
+            {
+              "name": "Update Salary Change",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeId\": \"{{employee_id}}\",\n  \"previousSalary\": 8500,\n  \"newSalary\": 10200,\n  \"currency\": \"EUR\",\n  \"effectiveDate\": \"2026-06-15T00:00:00Z\",\n  \"reason\": \"Final approved salary review\",\n  \"comment\": \"Adjusted after validation by HR management.\"\n}"
+                },
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/salary-changes/{{salaryChangeId}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "salary-changes", "{{salaryChangeId}}" ]
+                }
+              }
+            },
+            {
+              "name": "Delete Salary Change",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/salary-changes/{{salaryChangeId}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "salary-changes", "{{salaryChangeId}}" ]
+                }
+              }
+            },
+            {
+              "name": "Create Training",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const body = pm.response.json();",
+                      "const id = body.id || body.Id || (body.data && body.data.id) || (body.data && body.data.Id) || (body.Data && body.Data.id) || (body.Data && body.Data.Id) || '';",
+                      "if (id) pm.collectionVariables.set('trainingId', id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeId\": \"{{employee_id}}\",\n  \"title\": \"Advanced HR Analytics\",\n  \"provider\": \"Coursera\",\n  \"status\": \"InProgress\",\n  \"startDate\": \"2026-07-01T00:00:00Z\",\n  \"endDate\": \"2026-07-31T00:00:00Z\",\n  \"completionDate\": null,\n  \"certificateUrl\": \"https://example.com/certificates/hr-analytics\",\n  \"comment\": \"Training assigned for workforce analytics upskilling.\"\n}"
+                },
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/trainings",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "trainings" ]
+                }
+              }
+            },
+            {
+              "name": "Get All Trainings",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/trainings?page=1&pageSize=20",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "trainings" ],
+                  "query": [
+                    { "key": "page", "value": "1" },
+                    { "key": "pageSize", "value": "20" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Training By Id",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/trainings/{{trainingId}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "trainings", "{{trainingId}}" ]
+                }
+              }
+            },
+            {
+              "name": "Get Trainings By Employee",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/trainings/employee/{{employee_id}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "trainings", "employee", "{{employee_id}}" ]
+                }
+              }
+            },
+            {
+              "name": "Update Training",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeId\": \"{{employee_id}}\",\n  \"title\": \"Advanced HR Analytics\",\n  \"provider\": \"Coursera\",\n  \"status\": \"Completed\",\n  \"startDate\": \"2026-07-01T00:00:00Z\",\n  \"endDate\": \"2026-07-31T00:00:00Z\",\n  \"completionDate\": \"2026-07-29T00:00:00Z\",\n  \"certificateUrl\": \"https://example.com/certificates/hr-analytics-final\",\n  \"comment\": \"Training completed with certificate issued.\"\n}"
+                },
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/trainings/{{trainingId}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "trainings", "{{trainingId}}" ]
+                }
+              }
+            },
+            {
+              "name": "Delete Training",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/trainings/{{trainingId}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "trainings", "{{trainingId}}" ]
+                }
+              }
+            },
+            {
+              "name": "Create Reward",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const body = pm.response.json();",
+                      "const id = body.id || body.Id || (body.data && body.data.id) || (body.data && body.data.Id) || (body.Data && body.Data.id) || (body.Data && body.Data.Id) || '';",
+                      "if (id) pm.collectionVariables.set('rewardId', id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeId\": \"{{employee_id}}\",\n  \"title\": \"Employee of the Month\",\n  \"type\": \"Recognition\",\n  \"value\": 500,\n  \"grantedAt\": \"2026-08-01T00:00:00Z\",\n  \"reason\": \"Outstanding support during onboarding campaign\",\n  \"comment\": \"Recognition plus performance bonus.\"\n}"
+                },
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/rewards",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "rewards" ]
+                }
+              }
+            },
+            {
+              "name": "Get All Rewards",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/rewards?page=1&pageSize=20",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "rewards" ],
+                  "query": [
+                    { "key": "page", "value": "1" },
+                    { "key": "pageSize", "value": "20" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Reward By Id",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/rewards/{{rewardId}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "rewards", "{{rewardId}}" ]
+                }
+              }
+            },
+            {
+              "name": "Get Rewards By Employee",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/rewards/employee/{{employee_id}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "rewards", "employee", "{{employee_id}}" ]
+                }
+              }
+            },
+            {
+              "name": "Update Reward",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeId\": \"{{employee_id}}\",\n  \"title\": \"Employee of the Quarter\",\n  \"type\": \"Bonus\",\n  \"value\": 1200,\n  \"grantedAt\": \"2026-08-15T00:00:00Z\",\n  \"reason\": \"Expanded recognition after quarterly performance review\",\n  \"comment\": \"Updated reward to reflect quarterly award decision.\"\n}"
+                },
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/rewards/{{rewardId}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "rewards", "{{rewardId}}" ]
+                }
+              }
+            },
+            {
+              "name": "Delete Reward",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/rewards/{{rewardId}}",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "rewards", "{{rewardId}}" ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Evolution Self Flow",
+          "item": [
+            {
+              "name": "Login As Employee",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const body = pm.response.json();",
+                      "const token = body.accessToken || body.AccessToken || '';",
+                      "const accountId = body.accountId || body.AccountId || '';",
+                      "const email = body.email || body.Email || '';",
+                      "if (token) pm.collectionVariables.set('jwt_token', token);",
+                      "if (accountId) pm.collectionVariables.set('employee_account_id', accountId);",
+                      "if (email) pm.collectionVariables.set('employee_email', email);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "noauth" },
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{employee_email}}\",\n  \"password\": \"{{employee_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{account_command_base_url}}/api/auth/login",
+                  "host": [ "{{account_command_base_url}}" ],
+                  "path": [ "api", "auth", "login" ]
+                }
+              }
+            },
+            {
+              "name": "Get Self Job Movements",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/job-movements/self",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "job-movements", "self" ]
+                }
+              }
+            },
+            {
+              "name": "Get Self Salary Changes",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/salary-changes/self",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "salary-changes", "self" ]
+                }
+              }
+            },
+            {
+              "name": "Get Self Trainings",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/trainings/self",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "trainings", "self" ]
+                }
+              }
+            },
+            {
+              "name": "Get Self Rewards",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{gateway_base_url}}/api/rewards/self",
+                  "host": [ "{{gateway_base_url}}" ],
+                  "path": [ "api", "rewards", "self" ]
+                }
+              }
+            }
+          ]
         }
       ]
     }

@@ -2,10 +2,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\EvolutionService.Query.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MediatR" Version="13.0.0" />
+    <ProjectReference Include="..\Infrastructure\EvolutionService.Query.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Infrastructure.Api\Infrastructure.Api.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -60,6 +60,26 @@ public static class OcelotConfigurationFactory
 
                 Route("/api/media/images/{category}", ["POST"], d.Media),
 
+                Route("/api/job-movements", ["POST"], d.EvolutionCommand),
+                Route("/api/job-movements/{id}", ["PUT", "DELETE"], d.EvolutionCommand),
+                Route("/api/job-movements", ["GET"], d.EvolutionQuery),
+                Route("/api/job-movements/{everything}", ["GET"], d.EvolutionQuery),
+
+                Route("/api/salary-changes", ["POST"], d.EvolutionCommand),
+                Route("/api/salary-changes/{id}", ["PUT", "DELETE"], d.EvolutionCommand),
+                Route("/api/salary-changes", ["GET"], d.EvolutionQuery),
+                Route("/api/salary-changes/{everything}", ["GET"], d.EvolutionQuery),
+
+                Route("/api/trainings", ["POST"], d.EvolutionCommand),
+                Route("/api/trainings/{id}", ["PUT", "DELETE"], d.EvolutionCommand),
+                Route("/api/trainings", ["GET"], d.EvolutionQuery),
+                Route("/api/trainings/{everything}", ["GET"], d.EvolutionQuery),
+
+                Route("/api/rewards", ["POST"], d.EvolutionCommand),
+                Route("/api/rewards/{id}", ["PUT", "DELETE"], d.EvolutionCommand),
+                Route("/api/rewards", ["GET"], d.EvolutionQuery),
+                Route("/api/rewards/{everything}", ["GET"], d.EvolutionQuery),
+
                 Route("/api/evolution/{everything}", ["GET"], d.EvolutionQuery),
                 Route("/api/evolution/{everything}", ["POST", "PUT", "PATCH", "DELETE"], d.EvolutionCommand),
             ]
