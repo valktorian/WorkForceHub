@@ -1,722 +1,1098 @@
 {
-  "Routes": [
-    {
-      "DownstreamPathTemplate": "/swagger/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5222
-        }
-      ],
-      "UpstreamPathTemplate": "/docs/account-command/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/swagger/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5115
-        }
-      ],
-      "UpstreamPathTemplate": "/docs/account-query/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/swagger/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5062
-        }
-      ],
-      "UpstreamPathTemplate": "/docs/profile-command/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/swagger/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5003
-        }
-      ],
-      "UpstreamPathTemplate": "/docs/profile-query/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/swagger/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5033
-        }
-      ],
-      "UpstreamPathTemplate": "/docs/time-command/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/swagger/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5257
-        }
-      ],
-      "UpstreamPathTemplate": "/docs/time-query/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/swagger/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5049
-        }
-      ],
-      "UpstreamPathTemplate": "/docs/evolution-command/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/swagger/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5011
-        }
-      ],
-      "UpstreamPathTemplate": "/docs/evolution-query/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/auth/login",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5222
-        }
-      ],
-      "UpstreamPathTemplate": "/api/auth/login",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/accounts",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5222
-        }
-      ],
-      "UpstreamPathTemplate": "/api/accounts",
-      "UpstreamHttpMethod": [ "POST" ],
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
-      }
-    },
-    {
-      "DownstreamPathTemplate": "/api/accounts",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5115
-        }
-      ],
-      "UpstreamPathTemplate": "/api/accounts",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/accounts/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5222
-        }
-      ],
-      "UpstreamPathTemplate": "/api/accounts/{id}",
-      "UpstreamHttpMethod": [ "PUT", "DELETE" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/accounts/{id}/role",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5222
-        }
-      ],
-      "UpstreamPathTemplate": "/api/accounts/{id}/role",
-      "UpstreamHttpMethod": [ "PATCH" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/accounts/{id}/password",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5222
-        }
-      ],
-      "UpstreamPathTemplate": "/api/accounts/{id}/password",
-      "UpstreamHttpMethod": [ "PATCH" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/accounts/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5115
-        }
-      ],
-      "UpstreamPathTemplate": "/api/accounts/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/profiles",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5062
-        }
-      ],
-      "UpstreamPathTemplate": "/api/profiles",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/profiles/with-picture",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5062
-        }
-      ],
-      "UpstreamPathTemplate": "/api/profiles/with-picture",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/profiles/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5062
-        }
-      ],
-      "UpstreamPathTemplate": "/api/profiles/{id}",
-      "UpstreamHttpMethod": [ "PUT", "DELETE" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/profiles/{id}/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5062
-        }
-      ],
-      "UpstreamPathTemplate": "/api/profiles/{id}/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PATCH" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/profiles/self/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5062
-        }
-      ],
-      "UpstreamPathTemplate": "/api/profiles/self/{everything}",
-      "UpstreamHttpMethod": [ "PATCH" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/profiles",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5003
-        }
-      ],
-      "UpstreamPathTemplate": "/api/profiles",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/profiles/self",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5003
-        }
-      ],
-      "UpstreamPathTemplate": "/api/profiles/self",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/profiles/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5003
-        }
-      ],
-      "UpstreamPathTemplate": "/api/profiles/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/time-entries",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5033
-        }
-      ],
-      "UpstreamPathTemplate": "/api/time-entries",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/time-entries/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5033
-        }
-      ],
-      "UpstreamPathTemplate": "/api/time-entries/{id}",
-      "UpstreamHttpMethod": [ "PUT", "DELETE" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/time-entries",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5257
-        }
-      ],
-      "UpstreamPathTemplate": "/api/time-entries",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/time-entries/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5257
-        }
-      ],
-      "UpstreamPathTemplate": "/api/time-entries/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/timesheets",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5033
-        }
-      ],
-      "UpstreamPathTemplate": "/api/timesheets",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/timesheets/{id}/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5033
-        }
-      ],
-      "UpstreamPathTemplate": "/api/timesheets/{id}/{everything}",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/timesheets",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5257
-        }
-      ],
-      "UpstreamPathTemplate": "/api/timesheets",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/timesheets/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5257
-        }
-      ],
-      "UpstreamPathTemplate": "/api/timesheets/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/leave-requests",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5033
-        }
-      ],
-      "UpstreamPathTemplate": "/api/leave-requests",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/leave-requests/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5033
-        }
-      ],
-      "UpstreamPathTemplate": "/api/leave-requests/{id}",
-      "UpstreamHttpMethod": [ "PUT" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/leave-requests/{id}/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5033
-        }
-      ],
-      "UpstreamPathTemplate": "/api/leave-requests/{id}/{everything}",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/leave-balances/{employeeId}/adjust",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5033
-        }
-      ],
-      "UpstreamPathTemplate": "/api/leave-balances/{employeeId}/adjust",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/leave-requests",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5257
-        }
-      ],
-      "UpstreamPathTemplate": "/api/leave-requests",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/leave-requests/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5257
-        }
-      ],
-      "UpstreamPathTemplate": "/api/leave-requests/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/leave-balances/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5257
-        }
-      ],
-      "UpstreamPathTemplate": "/api/leave-balances/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/holidays",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5257
-        }
-      ],
-      "UpstreamPathTemplate": "/api/holidays",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/leave-types",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5257
-        }
-      ],
-      "UpstreamPathTemplate": "/api/leave-types",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/media/images/{category}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5199
-        }
-      ],
-      "UpstreamPathTemplate": "/api/media/images/{category}",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/job-movements",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5049
-        }
-      ],
-      "UpstreamPathTemplate": "/api/job-movements",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/job-movements/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5049
-        }
-      ],
-      "UpstreamPathTemplate": "/api/job-movements/{id}",
-      "UpstreamHttpMethod": [ "PUT", "DELETE" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/job-movements",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5011
-        }
-      ],
-      "UpstreamPathTemplate": "/api/job-movements",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/job-movements/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5011
-        }
-      ],
-      "UpstreamPathTemplate": "/api/job-movements/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/salary-changes",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5049
-        }
-      ],
-      "UpstreamPathTemplate": "/api/salary-changes",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/salary-changes/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5049
-        }
-      ],
-      "UpstreamPathTemplate": "/api/salary-changes/{id}",
-      "UpstreamHttpMethod": [ "PUT", "DELETE" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/salary-changes",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5011
-        }
-      ],
-      "UpstreamPathTemplate": "/api/salary-changes",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/salary-changes/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5011
-        }
-      ],
-      "UpstreamPathTemplate": "/api/salary-changes/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/trainings",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5049
-        }
-      ],
-      "UpstreamPathTemplate": "/api/trainings",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/trainings/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5049
-        }
-      ],
-      "UpstreamPathTemplate": "/api/trainings/{id}",
-      "UpstreamHttpMethod": [ "PUT", "DELETE" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/trainings",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5011
-        }
-      ],
-      "UpstreamPathTemplate": "/api/trainings",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/trainings/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5011
-        }
-      ],
-      "UpstreamPathTemplate": "/api/trainings/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/rewards",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5049
-        }
-      ],
-      "UpstreamPathTemplate": "/api/rewards",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/rewards/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5049
-        }
-      ],
-      "UpstreamPathTemplate": "/api/rewards/{id}",
-      "UpstreamHttpMethod": [ "PUT", "DELETE" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/rewards",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5011
-        }
-      ],
-      "UpstreamPathTemplate": "/api/rewards",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/rewards/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5011
-        }
-      ],
-      "UpstreamPathTemplate": "/api/rewards/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/evolution/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5011
-        }
-      ],
-      "UpstreamPathTemplate": "/api/evolution/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/evolution/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5049
-        }
-      ],
-      "UpstreamPathTemplate": "/api/evolution/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PUT", "PATCH", "DELETE" ]
-    }
-  ],
-  "GlobalConfiguration": {
-    "RequestIdKey": "X-Correlation-ID"
-  }
+    "Routes":  [
+                   {
+                       "DownstreamPathTemplate":  "/swagger/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "localhost",
+                                                          "Port":  5222
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/docs/account-command/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ]
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/swagger/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "localhost",
+                                                          "Port":  5115
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/docs/account-query/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ]
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/swagger/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "localhost",
+                                                          "Port":  5062
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/docs/profile-command/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ]
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/swagger/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "localhost",
+                                                          "Port":  5003
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/docs/profile-query/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ]
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/swagger/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "localhost",
+                                                          "Port":  5033
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/docs/time-command/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ]
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/swagger/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "localhost",
+                                                          "Port":  5257
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/docs/time-query/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ]
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/swagger/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "localhost",
+                                                          "Port":  5049
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/docs/evolution-command/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ]
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/swagger/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "localhost",
+                                                          "Port":  5011
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/docs/evolution-query/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ]
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/auth/login",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5222
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/auth/login",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ]
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/accounts",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5222
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/accounts",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "RateLimitOptions":  {
+                                                "ClientWhitelist":  [
+
+                                                                    ],
+                                                "EnableRateLimiting":  true,
+                                                "Period":  "1m",
+                                                "PeriodTimespan":  60,
+                                                "Limit":  100
+                                            }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/accounts",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5115
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/accounts",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/accounts/{id}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5222
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/accounts/{id}",
+                       "UpstreamHttpMethod":  [
+                                                  "PUT",
+                                                  "DELETE"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/accounts/{id}/role",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5222
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/accounts/{id}/role",
+                       "UpstreamHttpMethod":  [
+                                                  "PATCH"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/accounts/{id}/password",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5222
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/accounts/{id}/password",
+                       "UpstreamHttpMethod":  [
+                                                  "PATCH"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/accounts/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5115
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/accounts/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/profiles",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5062
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/profiles",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/profiles/with-picture",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5062
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/profiles/with-picture",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/profiles/{id}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5062
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/profiles/{id}",
+                       "UpstreamHttpMethod":  [
+                                                  "PUT",
+                                                  "DELETE"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/profiles/{id}/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5062
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/profiles/{id}/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "POST",
+                                                  "PATCH"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/profiles/self/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5062
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/profiles/self/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "PATCH"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/profiles",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5003
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/profiles",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/profiles/self",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5003
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/profiles/self",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/profiles/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5003
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/profiles/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/time-entries",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5033
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/time-entries",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/time-entries/{id}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5033
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/time-entries/{id}",
+                       "UpstreamHttpMethod":  [
+                                                  "PUT",
+                                                  "DELETE"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/time-entries",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5257
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/time-entries",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/time-entries/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5257
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/time-entries/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/timesheets",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5033
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/timesheets",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/timesheets/{id}/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5033
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/timesheets/{id}/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/timesheets",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5257
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/timesheets",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/timesheets/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5257
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/timesheets/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/leave-requests",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5033
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/leave-requests",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/leave-requests/{id}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5033
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/leave-requests/{id}",
+                       "UpstreamHttpMethod":  [
+                                                  "PUT"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/leave-requests/{id}/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5033
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/leave-requests/{id}/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/leave-balances/{employeeId}/adjust",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5033
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/leave-balances/{employeeId}/adjust",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/leave-requests",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5257
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/leave-requests",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/leave-requests/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5257
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/leave-requests/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/leave-balances/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5257
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/leave-balances/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/holidays",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5257
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/holidays",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/leave-types",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5257
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/leave-types",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/media/images/{category}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5199
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/media/images/{category}",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/job-movements",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5049
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/job-movements",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/job-movements/{id}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5049
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/job-movements/{id}",
+                       "UpstreamHttpMethod":  [
+                                                  "PUT",
+                                                  "DELETE"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/job-movements",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5011
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/job-movements",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/job-movements/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5011
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/job-movements/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/salary-changes",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5049
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/salary-changes",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/salary-changes/{id}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5049
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/salary-changes/{id}",
+                       "UpstreamHttpMethod":  [
+                                                  "PUT",
+                                                  "DELETE"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/salary-changes",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5011
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/salary-changes",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/salary-changes/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5011
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/salary-changes/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/trainings",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5049
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/trainings",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/trainings/{id}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5049
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/trainings/{id}",
+                       "UpstreamHttpMethod":  [
+                                                  "PUT",
+                                                  "DELETE"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/trainings",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5011
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/trainings",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/trainings/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5011
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/trainings/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/rewards",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5049
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/rewards",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/rewards/{id}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5049
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/rewards/{id}",
+                       "UpstreamHttpMethod":  [
+                                                  "PUT",
+                                                  "DELETE"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/rewards",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5011
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/rewards",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/rewards/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5011
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/rewards/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/evolution/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5011
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/evolution/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/evolution/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "host.docker.internal",
+                                                          "Port":  5049
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/evolution/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "POST",
+                                                  "PUT",
+                                                  "PATCH",
+                                                  "DELETE"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   }
+               ],
+    "GlobalConfiguration":  {
+                                "RequestIdKey":  "X-Correlation-ID"
+                            }
 }

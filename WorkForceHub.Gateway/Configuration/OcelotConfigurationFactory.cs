@@ -4,6 +4,8 @@ namespace WorkForceHub.Gateway.Configuration;
 
 public static class OcelotConfigurationFactory
 {
+    private const string BearerAuthenticationProviderKey = "Bearer";
+
     public static FileConfiguration Build(DownstreamOptions d)
     {
         return new FileConfiguration
@@ -106,9 +108,29 @@ public static class OcelotConfigurationFactory
             }
         };
 
+        if (IsProtectedApiRoute(path, methods))
+        {
+            route.AuthenticationOptions = new FileAuthenticationOptions
+            {
+                AuthenticationProviderKeys = [BearerAuthenticationProviderKey]
+            };
+        }
+
         if (rateLimit is not null)
             route.RateLimitOptions = rateLimit;
 
         return route;
+    }
+
+    private static bool IsProtectedApiRoute(string path, IReadOnlyCollection<string> methods)
+    {
+        if (!path.StartsWith("/api", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        return !string.Equals(path, "/api/auth/login", StringComparison.OrdinalIgnoreCase)
+            && !(string.Equals(path, "/api/accounts", StringComparison.OrdinalIgnoreCase)
+                && methods.Any(method => string.Equals(method, "POST", StringComparison.OrdinalIgnoreCase)));
     }
 }

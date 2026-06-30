@@ -86,6 +86,13 @@ app.MapGet("/gateway-docs/v1/openapi.json", async (IHttpClientFactory httpClient
             {
                 ["schemas"] = new JsonObject(),
                 ["securitySchemes"] = new JsonObject()
+            },
+            ["security"] = new JsonArray
+            {
+                new JsonObject
+                {
+                    ["Bearer"] = new JsonArray()
+                }
             }
         };
 

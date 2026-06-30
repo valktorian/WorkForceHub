@@ -1,7 +1,9 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-const string localJwtSecret = "WorkForceHub-Local-Development-Secret-Key-2026";
-const string localInternalApiKey = "WorkForceHub-Local-Internal-Media-Key-2026";
+var localJwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET_KEY")
+    ?? Convert.ToBase64String(System.Security.Cryptography.RandomNumberGenerator.GetBytes(64));
+var localInternalApiKey = Environment.GetEnvironmentVariable("MEDIA_INTERNAL_API_KEY")
+    ?? Convert.ToBase64String(System.Security.Cryptography.RandomNumberGenerator.GetBytes(32));
 
 AddService("gateway", @"..\WorkForceHub.Gateway\WorkForceHub.Gateway.csproj")
     .WithEnvironment("GatewayMode", "Local");
