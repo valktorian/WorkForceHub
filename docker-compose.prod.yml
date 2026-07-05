@@ -122,14 +122,27 @@ services:
       - full
 
   jaeger:
-    image: jaegertracing/all-in-one:latest
+    image: jaegertracing/jaeger:2.19.0
     container_name: jaeger
     restart: always
+    command: ["--config", "/jaeger/config-spm.yml"]
     ports:
       - "127.0.0.1:16686:16686"
-      - "127.0.0.1:4317:4317"
-    environment:
-      COLLECTOR_OTLP_ENABLED: "true"
+    volumes:
+      - ./docker/jaeger/config-spm.yml:/jaeger/config-spm.yml:ro
+      - ./docker/jaeger/ui-config.json:/jaeger/ui-config.json:ro
+    depends_on:
+      - prometheus
+    profiles:
+      - full
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus-workforce
+    restart: always
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
     profiles:
       - full
 
@@ -304,3 +317,4 @@ volumes:
   mongo_data:
   kafka_data:
   media_uploads:
+  prometheus_data:

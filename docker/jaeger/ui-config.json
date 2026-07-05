@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "menuEnabled": true
+  },
+  "monitor": {
+    "menuEnabled": true,
+    "docsLink": "https://www.jaegertracing.io/docs/latest/architecture/spm/"
+  },
+  "themes": {
+    "enabled": true
+  },
+  "criticalPathEnabled": true,
+  "topTagPrefixes": ["http.", "db.", "otel.", "messaging."]
+}
