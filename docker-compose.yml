@@ -139,6 +139,7 @@ services:
     depends_on:
       - prometheus
     profiles:
+      - minimal
       - full
 
   prometheus:
@@ -151,6 +152,7 @@ services:
       - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus_data:/prometheus
     profiles:
+      - minimal
       - full
 
   workforcehub-gateway:
@@ -167,7 +169,6 @@ services:
       - Storage__InternalApiKey=${MEDIA_INTERNAL_API_KEY:?MEDIA_INTERNAL_API_KEY is required}
       - Jaeger__OtlpEndpoint=http://jaeger:4317
     profiles:
-      - minimal
       - full
 
   account-service-command:
@@ -186,7 +187,6 @@ services:
       - postgres_write
       - kafka
     profiles:
-      - minimal
       - full
 
   account-service-query:
@@ -205,7 +205,6 @@ services:
       - mongo_read
       - kafka
     profiles:
-      - minimal
       - full
 
   profile-service-command:
@@ -224,7 +223,6 @@ services:
       - postgres_write
       - kafka
     profiles:
-      - minimal
       - full
 
   profile-service-query:
@@ -243,7 +241,6 @@ services:
       - mongo_read
       - kafka
     profiles:
-      - minimal
       - full
 
   time-service-command:
@@ -262,7 +259,6 @@ services:
       - postgres_write
       - kafka
     profiles:
-      - minimal
       - full
 
   time-service-query:
@@ -281,7 +277,6 @@ services:
       - mongo_read
       - kafka
     profiles:
-      - minimal
       - full
 
   evolution-service-command:
@@ -300,7 +295,6 @@ services:
       - postgres_write
       - kafka
     profiles:
-      - minimal
       - full
 
   evolution-service-query:
@@ -319,7 +313,6 @@ services:
       - mongo_read
       - kafka
     profiles:
-      - minimal
       - full
 
   media-service:
@@ -335,7 +328,6 @@ services:
     volumes:
       - media_uploads:/app/uploads
     profiles:
-      - minimal
       - full
 
 volumes:
