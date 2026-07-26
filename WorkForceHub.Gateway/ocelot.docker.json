@@ -641,6 +641,20 @@
                                                  }
                    },
                    {
+                       "DownstreamPathTemplate":  "/media/{everything}",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "media-service",
+                                                          "Port":  80
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/media/{everything}",
+                       "UpstreamHttpMethod":  [
+                                                  "GET"
+                                              ]
+                   },
+                   {
                        "DownstreamPathTemplate":  "/api/media/images/{category}",
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
