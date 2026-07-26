@@ -1,43 +1,33 @@
 using Infrastructure.Api.Authentication;
 using Infrastructure.Api.Messaging;
+using Infrastructure.Api.Persistence;
+using TimeService.Command.Application.Abstractions;
 using TimeService.Command.Application.Commands;
 using TimeService.Command.Application.DTOs;
-using TimeService.Command.Domain.Events;
+using TimeService.Command.Domain;
 
 namespace TimeService.Command.Application.Handlers;
 
 public class CreateTimesheetHandler : ICommandHandler<CreateTimesheetCommand, CommandAcceptedResponse>
 {
-    private readonly IKafkaProducer _kafkaProducer;
+    private readonly ITimeCommandRepository<Timesheet> _repository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserAccessor _currentUserAccessor;
 
-    public CreateTimesheetHandler(IKafkaProducer kafkaProducer, ICurrentUserAccessor currentUserAccessor)
+    public CreateTimesheetHandler(ITimeCommandRepository<Timesheet> repository, IUnitOfWork unitOfWork, ICurrentUserAccessor currentUserAccessor)
     {
-        _kafkaProducer = kafkaProducer;
+        _repository = repository;
+        _unitOfWork = unitOfWork;
         _currentUserAccessor = currentUserAccessor;
     }
 
     public async Task<CommandAcceptedResponse> HandleAsync(CreateTimesheetCommand command, CancellationToken cancellationToken = default)
     {
-        var timesheetId = Guid.NewGuid();
-        var now = DateTime.UtcNow;
-        var accountId = _currentUserAccessor.GetRequiredAccountId();
-
-        var evt = new TimesheetCreatedEvent
-        {
-            TimesheetId = timesheetId,
-            AccountId = accountId,
-            EmployeeId = command.EmployeeId,
-            PeriodStart = command.PeriodStart.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc),
-            PeriodEnd = command.PeriodEnd.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc),
-            TotalHours = 0m,
-            Status = "Draft",
-            CreatedAt = now,
-            UpdatedAt = now
-        };
-
-        await _kafkaProducer.ProduceAsync(evt, evt, "time.events");
-
-        return new CommandAcceptedResponse(timesheetId, evt.Status, "Timesheet create request accepted.", evt);
+        var entity = Timesheet.Create(_currentUserAccessor.GetRequiredAccountId(), command.EmployeeId,
+            command.PeriodStart, command.PeriodEnd);
+        var evt = TimeEventFactory.Created(entity);
+        await _repository.AddAsync(entity, evt, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        return new CommandAcceptedResponse(entity.Id, entity.Status, "Timesheet created.", evt);
     }
 }

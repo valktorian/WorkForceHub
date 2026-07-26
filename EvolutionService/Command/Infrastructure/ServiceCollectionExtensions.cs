@@ -37,6 +37,7 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddHostedService<EvolutionOutboxPublisher>();
+        services.AddHostedService<OutboxCleanupWorker<EvolutionCommandDbContext>>();
         return services;
     }
 }

@@ -28,6 +28,12 @@ public class TimeEventConsumer : IEventHandler
         {
             if (payload.TryGetProperty("TimeEntryId", out _))
             {
+                if (payload.TryGetProperty("DeletedAt", out _))
+                {
+                    await DeleteTimeEntryAsync(payload);
+                    return;
+                }
+
                 await UpsertTimeEntryAsync(payload);
                 return;
             }
@@ -77,6 +83,16 @@ public class TimeEventConsumer : IEventHandler
         });
 
         await _readDb.TimeEntries.ReplaceOneAsync(x => x.Id == model.Id, model, new ReplaceOptions { IsUpsert = true });
+    }
+
+    private async Task DeleteTimeEntryAsync(JsonElement payload)
+    {
+        var timeEntryId = payload.GetProperty("TimeEntryId").GetGuid();
+        var result = await _readDb.TimeEntries.DeleteOneAsync(x => x.Id == timeEntryId);
+        if (result.DeletedCount == 0)
+        {
+            _logger.LogWarning("Time entry projection {TimeEntryId} was already absent.", timeEntryId);
+        }
     }
 
     private async Task UpsertTimesheetAsync(JsonElement payload)
@@ -144,8 +160,6 @@ public class TimeEventConsumer : IEventHandler
         var leaveBalanceId = payload.GetProperty("LeaveBalanceId").GetGuid();
         var employeeId = payload.GetProperty("EmployeeId").GetGuid();
         var leaveType = payload.GetProperty("LeaveType").GetString() ?? string.Empty;
-        var delta = payload.GetProperty("Delta").GetDecimal();
-
         var existing = await _readDb.LeaveBalances
             .Find(x => x.EmployeeId == employeeId && x.LeaveType == leaveType)
             .FirstOrDefaultAsync();
@@ -156,7 +170,9 @@ public class TimeEventConsumer : IEventHandler
         });
 
         model.AccountId ??= payload.GetOptionalGuid("AccountId");
-        model.Available += delta;
+        model.Available = payload.GetProperty("Available").GetDecimal();
+        model.Used = payload.GetProperty("Used").GetDecimal();
+        model.Pending = payload.GetProperty("Pending").GetDecimal();
         model.UpdatedAt = payload.GetProperty("UpdatedAt").GetDateTime();
 
         await _readDb.LeaveBalances.ReplaceOneAsync(

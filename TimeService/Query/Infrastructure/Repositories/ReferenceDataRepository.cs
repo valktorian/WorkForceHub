@@ -1,3 +1,4 @@
+using Infrastructure.Api.Constants;
 using TimeService.Query.Domain;
 using TimeService.Query.Domain.Repositories;
 
@@ -20,9 +21,16 @@ public class ReferenceDataRepository : IReferenceDataRepository
     {
         IReadOnlyList<LeaveTypeReadModel> items =
         [
-            new LeaveTypeReadModel { Code = "Annual", Name = "Annual Leave", IsPaid = true },
-            new LeaveTypeReadModel { Code = "Sick", Name = "Sick Leave", IsPaid = true },
-            new LeaveTypeReadModel { Code = "Unpaid", Name = "Unpaid Leave", IsPaid = false }
+            new LeaveTypeReadModel { Code = LeaveTypeConstants.Annual, Name = "Annual Leave", IsPaid = true },
+            new LeaveTypeReadModel { Code = LeaveTypeConstants.Holiday, Name = "Holiday Leave", IsPaid = true },
+            new LeaveTypeReadModel { Code = LeaveTypeConstants.Sick, Name = "Sick Leave", IsPaid = true },
+            new LeaveTypeReadModel { Code = LeaveTypeConstants.Unpaid, Name = "Unpaid Leave", IsPaid = false },
+            new LeaveTypeReadModel { Code = LeaveTypeConstants.Maternity, Name = "Maternity Leave", IsPaid = true },
+            new LeaveTypeReadModel { Code = LeaveTypeConstants.Paternity, Name = "Paternity Leave", IsPaid = true },
+            new LeaveTypeReadModel { Code = LeaveTypeConstants.Parental, Name = "Parental Leave", IsPaid = true },
+            new LeaveTypeReadModel { Code = LeaveTypeConstants.Bereavement, Name = "Bereavement Leave", IsPaid = true },
+            new LeaveTypeReadModel { Code = LeaveTypeConstants.Personal, Name = "Personal Leave", IsPaid = true },
+            new LeaveTypeReadModel { Code = LeaveTypeConstants.Compensatory, Name = "Compensatory Leave", IsPaid = true }
         ];
 
         return Task.FromResult(items);

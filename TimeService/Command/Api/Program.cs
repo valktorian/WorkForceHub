@@ -6,9 +6,12 @@ using Infrastructure.Api.Messaging;
 using Infrastructure.Api.Middleware;
 using Infrastructure.Api.Observability;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TimeService.Command.Application.Commands;
 using TimeService.Command.Application.DTOs;
 using TimeService.Command.Application.Handlers;
+using TimeService.Command.Infrastructure;
+using TimeService.Command.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,20 +20,15 @@ builder.Services.AddMemoryCache();
 builder.Services.AddScoped<IdempotencyFilter>();
 builder.Services.Configure<MvcOptions>(options => options.Filters.Add<IdempotencyFilter>());
 builder.Services.AddWorkForceHubTracing(builder.Configuration, "TimeService.Command");
+builder.Services.AddTimeCommandInfrastructure(builder.Configuration);
 builder.Services.AddHealthChecks()
-    .AddNpgSql(builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty, name: "postgresql");
+    .AddDbContextCheck<TimeCommandDbContext>("postgresql");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddWorkForceHubJwtAuthentication(builder.Configuration);
 builder.Services.AddWorkForceHubSwagger("WorkForceHub Time Command API");
 builder.Services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
 builder.Services.AddHandlersFromAssemblies(typeof(CreateTimeEntryHandler).Assembly);
-builder.Services.AddSingleton<IKafkaProducer>(sp =>
-{
-    var bootstrapServers = builder.Configuration.GetSection("Kafka")["BootstrapServers"] ?? "localhost:29092";
-    var logger = sp.GetRequiredService<ILogger<KafkaProducer>>();
-    return new KafkaProducer(logger, bootstrapServers);
-});
 builder.Services.AddScoped<ICommandHandler<CreateTimeEntryCommand, CommandAcceptedResponse>, CreateTimeEntryHandler>();
 builder.Services.AddScoped<ICommandHandler<UpdateTimeEntryCommand, CommandAcceptedResponse>, UpdateTimeEntryHandler>();
 builder.Services.AddScoped<ICommandHandler<DeleteTimeEntryCommand, CommandAcceptedResponse>, DeleteTimeEntryHandler>();
@@ -49,6 +47,7 @@ builder.Services.AddScoped<ICommandHandler<AdjustLeaveBalanceCommand, CommandAcc
 builder.Services.AddScoped<ICommandDispatcher, CommandDispatcher>();
 
 var app = builder.Build();
+await app.ApplyMigrationsAsync<TimeCommandDbContext>();
 
 if (app.Environment.IsDevelopment())
 {

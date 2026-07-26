@@ -37,6 +37,9 @@ public static class EventTypeConstants
     public static class Time
     {
         public const string TimeEntryCreated = "TimeService.Command.Domain.Events.TimeEntryCreatedEvent";
+        public const string TimeEntryUpdated = "TimeService.Command.Domain.Events.TimeEntryUpdatedEvent";
+        public const string TimeEntryDeleted = "TimeService.Command.Domain.Events.TimeEntryDeletedEvent";
+        public const string LeaveRequestUpdated = "TimeService.Command.Domain.Events.LeaveRequestUpdatedEvent";
         public const string TimesheetCreated = "TimeService.Command.Domain.Events.TimesheetCreatedEvent";
         public const string LeaveRequestCreated = "TimeService.Command.Domain.Events.LeaveRequestCreatedEvent";
         public const string TimesheetStatusChanged = "TimeService.Command.Domain.Events.TimesheetStatusChangedEvent";
@@ -46,6 +49,9 @@ public static class EventTypeConstants
         public static readonly string[] QuerySubscriptions =
         [
             TimeEntryCreated,
+            TimeEntryUpdated,
+            TimeEntryDeleted,
+            LeaveRequestUpdated,
             TimesheetCreated,
             LeaveRequestCreated,
             TimesheetStatusChanged,

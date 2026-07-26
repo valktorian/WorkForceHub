@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddHostedService<AccountOutboxPublisher>();
+        services.AddHostedService<OutboxCleanupWorker<AccountCommandDbContext>>();
 
         return services;
     }
