@@ -1,5 +1,16 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
+var appEnvironment = GetRequiredSetting("AppHost:Environment");
+var launchProfile = GetRequiredSetting("AppHost:LaunchProfile");
+var postgresHost = GetRequiredSetting("LocalInfrastructure:Postgres:Host");
+var postgresPort = GetRequiredSetting("LocalInfrastructure:Postgres:Port");
+var mongoHost = GetRequiredSetting("LocalInfrastructure:Mongo:Host");
+var mongoPort = GetRequiredSetting("LocalInfrastructure:Mongo:Port");
+var mongoDatabase = GetRequiredSetting("LocalInfrastructure:Mongo:Database");
+var mongoAuthSource = GetRequiredSetting("LocalInfrastructure:Mongo:AuthSource");
+var kafkaBootstrapServers = GetRequiredSetting("LocalInfrastructure:Kafka:BootstrapServers");
+var mediaBaseUrl = GetRequiredSetting("LocalInfrastructure:Media:BaseUrl");
+
 var localEnvironment = LoadLocalEnvironment();
 var localJwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET_KEY")
     ?? localEnvironment.GetValueOrDefault("JWT_SECRET_KEY")
@@ -11,46 +22,56 @@ var postgresUser = GetLocalSetting("POSTGRES_USER", "admin");
 var postgresPassword = GetLocalSetting("POSTGRES_PASSWORD", "admin");
 var mongoUser = GetLocalSetting("MONGO_INITDB_ROOT_USERNAME", "root");
 var mongoPassword = GetLocalSetting("MONGO_INITDB_ROOT_PASSWORD", "root");
-var mongoConnectionString = $"mongodb://{Uri.EscapeDataString(mongoUser)}:{Uri.EscapeDataString(mongoPassword)}@localhost:27017/admin?authSource=admin";
+var mongoConnectionString = $"mongodb://{Uri.EscapeDataString(mongoUser)}:{Uri.EscapeDataString(mongoPassword)}@{mongoHost}:{mongoPort}/{mongoDatabase}?authSource={Uri.EscapeDataString(mongoAuthSource)}";
 
-AddService("gateway", @"..\WorkForceHub.Gateway\WorkForceHub.Gateway.csproj")
+AddService("gateway", GetProjectPath("Gateway"))
     .WithEnvironment("GatewayMode", "Local");
 
-AddCommandService("account-command", @"..\AccountService\Command\Api\AccountService.Command.Api.csproj", "account_write");
-AddQueryService("account-query", @"..\AccountService\Query\Api\AccountService.Query.Api.csproj");
-AddCommandService("profile-command", @"..\ProfileService\Command\Api\ProfileService.Command.Api.csproj", "profile_write");
-AddQueryService("profile-query", @"..\ProfileService\Query\Api\ProfileService.Query.Api.csproj");
-AddCommandService("time-command", @"..\TimeService\Command\Api\TimeService.Command.Api.csproj", "time_write");
-AddQueryService("time-query", @"..\TimeService\Query\Api\TimeService.Query.Api.csproj");
-AddCommandService("evolution-command", @"..\EvolutionService\Command\Api\EvolutionService.Command.Api.csproj", "evolution_write");
-AddQueryService("evolution-query", @"..\EvolutionService\Query\Api\EvolutionService.Query.Api.csproj");
-AddService("media", @"..\MediaService\Api\MediaService.Api.csproj");
+AddCommandService("account-command", GetProjectPath("AccountCommand"), GetRequiredSetting("Databases:Account"));
+AddQueryService("account-query", GetProjectPath("AccountQuery"));
+AddCommandService("profile-command", GetProjectPath("ProfileCommand"), GetRequiredSetting("Databases:Profile"))
+    .WithEnvironment("MediaStorage__BaseUrl", mediaBaseUrl)
+    .WithEnvironment("MediaStorage__InternalApiKey", localInternalApiKey);
+AddQueryService("profile-query", GetProjectPath("ProfileQuery"));
+AddCommandService("time-command", GetProjectPath("TimeCommand"), GetRequiredSetting("Databases:Time"));
+AddQueryService("time-query", GetProjectPath("TimeQuery"));
+AddCommandService("evolution-command", GetProjectPath("EvolutionCommand"), GetRequiredSetting("Databases:Evolution"));
+AddQueryService("evolution-query", GetProjectPath("EvolutionQuery"));
+AddService("media", GetProjectPath("Media"));
 
 builder.Build().Run();
 
 IResourceBuilder<ProjectResource> AddCommandService(string name, string projectPath, string databaseName)
 {
-    var connectionString = $"Host=localhost;Port=55433;Database={databaseName};Username={postgresUser};Password={postgresPassword}";
+    var connectionString = $"Host={postgresHost};Port={postgresPort};Database={databaseName};Username={postgresUser};Password={postgresPassword}";
 
     return AddService(name, projectPath)
         .WithEnvironment("ConnectionStrings__DefaultConnection", connectionString)
-        .WithEnvironment("Kafka__BootstrapServers", "localhost:29092");
+        .WithEnvironment("Kafka__BootstrapServers", kafkaBootstrapServers);
 }
 
 IResourceBuilder<ProjectResource> AddQueryService(string name, string projectPath)
 {
     return AddService(name, projectPath)
         .WithEnvironment("ConnectionStrings__ReadDatabase", mongoConnectionString)
-        .WithEnvironment("Kafka__BootstrapServers", "localhost:29092");
+        .WithEnvironment("Kafka__BootstrapServers", kafkaBootstrapServers);
 }
 
 IResourceBuilder<ProjectResource> AddService(string name, string projectPath)
 {
-    return builder.AddProject(name, projectPath, launchProfileName: "http")
-        .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")
-        .WithEnvironment("DOTNET_ENVIRONMENT", "Development")
+    return builder.AddProject(name, projectPath, launchProfileName: launchProfile)
+        .WithEnvironment("ASPNETCORE_ENVIRONMENT", appEnvironment)
+        .WithEnvironment("DOTNET_ENVIRONMENT", appEnvironment)
         .WithEnvironment("Jwt__SecretKey", localJwtSecret)
         .WithEnvironment("Storage__InternalApiKey", localInternalApiKey);
+}
+
+string GetProjectPath(string name) => GetRequiredSetting($"Projects:{name}");
+
+string GetRequiredSetting(string key)
+{
+    return builder.Configuration[key]
+        ?? throw new InvalidOperationException($"Required AppHost configuration '{key}' is missing.");
 }
 
 string GetLocalSetting(string name, string fallback)
