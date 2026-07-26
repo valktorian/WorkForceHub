@@ -250,8 +250,9 @@
                                                   ],
                        "UpstreamPathTemplate":  "/api/profiles/self/{everything}",
                        "UpstreamHttpMethod":  [
-                                                  "PATCH"
-                                              ],
+                                                 "POST",
+                                                 "PATCH"
+                                             ],
                        "AuthenticationOptions":  {
                                                      "AuthenticationProviderKeys":  [
                                                                                         "Bearer"
