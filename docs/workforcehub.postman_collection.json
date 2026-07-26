@@ -27,12 +27,6 @@
     }
   ],
   "variable": [
-    { "key": "account_command_base_url", "value": "http://localhost:5222" },
-    { "key": "account_query_base_url", "value": "http://localhost:5115" },
-    { "key": "profile_command_base_url", "value": "http://localhost:5062" },
-    { "key": "profile_query_base_url", "value": "http://localhost:5003" },
-    { "key": "time_command_base_url", "value": "http://localhost:5033" },
-    { "key": "time_query_base_url", "value": "http://localhost:5257" },
     { "key": "email", "value": "john.doe@local.test" },
     { "key": "password", "value": "CHANGE_ME_DEMO_PASSWORD" },
     { "key": "jwt_token", "value": "" },
@@ -94,8 +88,8 @@
               "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
             },
             "url": {
-              "raw": "{{account_command_base_url}}/api/auth/login",
-              "host": [ "{{account_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/auth/login",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "auth", "login" ]
             }
           }
@@ -131,8 +125,8 @@
               "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"role\": \"HRAdmin\"\n}"
             },
             "url": {
-              "raw": "{{account_command_base_url}}/api/accounts",
-              "host": [ "{{account_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/accounts",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "accounts" ]
             }
           }
@@ -149,8 +143,8 @@
               "raw": "{\n  \"email\": \"{{email}}\",\n  \"firstName\": \"John Updated\",\n  \"lastName\": \"Doe Updated\"\n}"
             },
             "url": {
-              "raw": "{{account_command_base_url}}/api/accounts/{{account_id}}",
-              "host": [ "{{account_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/accounts/{{account_id}}",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "accounts", "{{account_id}}" ]
             }
           }
@@ -167,8 +161,8 @@
               "raw": "{\n  \"role\": \"Manager\"\n}"
             },
             "url": {
-              "raw": "{{account_command_base_url}}/api/accounts/{{account_id}}/role",
-              "host": [ "{{account_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/accounts/{{account_id}}/role",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "accounts", "{{account_id}}", "role" ]
             }
           }
@@ -185,8 +179,8 @@
               "raw": "{\n  \"newPassword\": \"CHANGE_ME_NEW_DEMO_PASSWORD\"\n}"
             },
             "url": {
-              "raw": "{{account_command_base_url}}/api/accounts/{{account_id}}/password",
-              "host": [ "{{account_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/accounts/{{account_id}}/password",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "accounts", "{{account_id}}", "password" ]
             }
           }
@@ -196,8 +190,8 @@
           "request": {
             "method": "DELETE",
             "url": {
-              "raw": "{{account_command_base_url}}/api/accounts/{{account_id}}",
-              "host": [ "{{account_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/accounts/{{account_id}}",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "accounts", "{{account_id}}" ]
             }
           }
@@ -212,8 +206,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{account_query_base_url}}/api/accounts",
-              "host": [ "{{account_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/accounts",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "accounts" ]
             }
           }
@@ -223,8 +217,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{account_query_base_url}}/api/accounts/{{account_id}}",
-              "host": [ "{{account_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/accounts/{{account_id}}",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "accounts", "{{account_id}}" ]
             }
           }
@@ -259,8 +253,8 @@
               "raw": "{\n  \"employeeNumber\": \"EMP-1001\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"workEmail\": \"john.doe@workforcehub.local\",\n  \"personalEmail\": \"john.personal@local.test\",\n  \"phoneNumber\": \"+212600000000\",\n  \"address\": \"Rabat, Morocco\",\n  \"dateOfBirth\": \"1998-03-10T00:00:00Z\",\n  \"jobTitle\": \"HR Specialist\",\n  \"department\": \"Human Resources\",\n  \"managerProfileId\": null,\n  \"employmentType\": \"FullTime\",\n  \"hireDate\": \"2026-03-16T00:00:00Z\",\n  \"organizationRole\": \"HR Specialist\",\n  \"employmentStatus\": \"Active\",\n  \"accountId\": \"{{account_id}}\"\n}"
             },
             "url": {
-              "raw": "{{profile_command_base_url}}/api/profiles",
-              "host": [ "{{profile_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles" ]
             }
           }
@@ -294,8 +288,8 @@
               ]
             },
             "url": {
-              "raw": "{{profile_command_base_url}}/api/profiles",
-              "host": [ "{{profile_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles" ]
             },
             "description": "Multipart create example with a JSON `payload` field and an optional `profilePicture` file."
@@ -313,8 +307,8 @@
               "raw": "{\n  \"employeeNumber\": \"EMP-1001\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe Updated\",\n  \"workEmail\": \"john.doe@workforcehub.local\",\n  \"personalEmail\": \"john.personal@local.test\",\n  \"phoneNumber\": \"+212611111111\",\n  \"address\": \"Casablanca, Morocco\",\n  \"dateOfBirth\": \"1998-03-10T00:00:00Z\",\n  \"jobTitle\": \"HR Specialist\",\n  \"department\": \"Human Resources\",\n  \"managerProfileId\": null,\n  \"employmentType\": \"FullTime\",\n  \"hireDate\": \"2026-03-16T00:00:00Z\",\n  \"organizationRole\": \"HR Specialist\"\n}"
             },
             "url": {
-              "raw": "{{profile_command_base_url}}/api/profiles/{{profile_id}}",
-              "host": [ "{{profile_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles/{{profile_id}}",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles", "{{profile_id}}" ]
             }
           }
@@ -331,8 +325,8 @@
               "raw": "{\n  \"jobTitle\": \"HR Manager\",\n  \"department\": \"Human Resources\",\n  \"managerProfileId\": null,\n  \"employmentType\": \"FullTime\",\n  \"hireDate\": \"2026-03-16T00:00:00Z\",\n  \"organizationRole\": \"HR Manager\"\n}"
             },
             "url": {
-              "raw": "{{profile_command_base_url}}/api/profiles/{{profile_id}}/employment",
-              "host": [ "{{profile_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles/{{profile_id}}/employment",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles", "{{profile_id}}", "employment" ]
             }
           }
@@ -349,8 +343,8 @@
               "raw": "{\n  \"employmentStatus\": \"OnLeave\"\n}"
             },
             "url": {
-              "raw": "{{profile_command_base_url}}/api/profiles/{{profile_id}}/status",
-              "host": [ "{{profile_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles/{{profile_id}}/status",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles", "{{profile_id}}", "status" ]
             }
           }
@@ -367,8 +361,8 @@
               "raw": "{\n  \"accountId\": \"{{account_id}}\"\n}"
             },
             "url": {
-              "raw": "{{profile_command_base_url}}/api/profiles/{{profile_id}}/link-account",
-              "host": [ "{{profile_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles/{{profile_id}}/link-account",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles", "{{profile_id}}", "link-account" ]
             }
           }
@@ -385,8 +379,8 @@
               "raw": "{\n  \"personalEmail\": \"john.self@local.test\",\n  \"phoneNumber\": \"+212622222222\",\n  \"address\": \"Marrakech, Morocco\",\n  \"dateOfBirth\": \"1998-03-10T00:00:00Z\"\n}"
             },
             "url": {
-              "raw": "{{profile_command_base_url}}/api/profiles/self/personal-info",
-              "host": [ "{{profile_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles/self/personal-info",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles", "self", "personal-info" ]
             }
           }
@@ -406,8 +400,8 @@
               ]
             },
             "url": {
-              "raw": "{{profile_command_base_url}}/api/profiles/self/picture",
-              "host": [ "{{profile_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles/self/picture",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles", "self", "picture" ]
             },
             "description": "Replace `sample_profile_picture_path` with an actual local image path before sending."
@@ -418,8 +412,8 @@
           "request": {
             "method": "DELETE",
             "url": {
-              "raw": "{{profile_command_base_url}}/api/profiles/{{profile_id}}",
-              "host": [ "{{profile_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles/{{profile_id}}",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles", "{{profile_id}}" ]
             }
           }
@@ -434,8 +428,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{profile_query_base_url}}/api/profiles",
-              "host": [ "{{profile_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles" ]
             }
           }
@@ -445,8 +439,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{profile_query_base_url}}/api/profiles/{{profile_id}}",
-              "host": [ "{{profile_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles/{{profile_id}}",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles", "{{profile_id}}" ]
             }
           }
@@ -456,8 +450,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{profile_query_base_url}}/api/profiles/by-account/{{account_id}}",
-              "host": [ "{{profile_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles/by-account/{{account_id}}",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles", "by-account", "{{account_id}}" ]
             }
           }
@@ -467,8 +461,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{profile_query_base_url}}/api/profiles/self",
-              "host": [ "{{profile_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/profiles/self",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "profiles", "self" ]
             }
           }
@@ -502,8 +496,8 @@
               "raw": "{\n  \"employeeId\": \"{{employee_id}}\",\n  \"workDate\": \"2026-03-17\",\n  \"startTime\": \"09:00:00\",\n  \"endTime\": \"17:00:00\",\n  \"projectCode\": \"HRM\",\n  \"taskCode\": \"TIMESHEET\",\n  \"notes\": \"Worked on planning\"\n}"
             },
             "url": {
-              "raw": "{{time_command_base_url}}/api/time-entries",
-              "host": [ "{{time_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/time-entries",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "time-entries" ]
             }
           }
@@ -520,8 +514,8 @@
               "raw": "{\n  \"workDate\": \"2026-03-17\",\n  \"startTime\": \"08:30:00\",\n  \"endTime\": \"17:30:00\",\n  \"projectCode\": \"HRM\",\n  \"taskCode\": \"PLANNING\",\n  \"notes\": \"Updated entry\"\n}"
             },
             "url": {
-              "raw": "{{time_command_base_url}}/api/time-entries/{{time_entry_id}}",
-              "host": [ "{{time_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/time-entries/{{time_entry_id}}",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "time-entries", "{{time_entry_id}}" ]
             }
           }
@@ -531,8 +525,8 @@
           "request": {
             "method": "DELETE",
             "url": {
-              "raw": "{{time_command_base_url}}/api/time-entries/{{time_entry_id}}",
-              "host": [ "{{time_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/time-entries/{{time_entry_id}}",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "time-entries", "{{time_entry_id}}" ]
             }
           }
@@ -561,8 +555,8 @@
               "raw": "{\n  \"employeeId\": \"{{employee_id}}\",\n  \"periodStart\": \"2026-03-10\",\n  \"periodEnd\": \"2026-03-17\"\n}"
             },
             "url": {
-              "raw": "{{time_command_base_url}}/api/timesheets",
-              "host": [ "{{time_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/timesheets",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "timesheets" ]
             }
           }
@@ -572,8 +566,8 @@
           "request": {
             "method": "POST",
             "url": {
-              "raw": "{{time_command_base_url}}/api/timesheets/{{timesheet_id}}/submit",
-              "host": [ "{{time_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/timesheets/{{timesheet_id}}/submit",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "timesheets", "{{timesheet_id}}", "submit" ]
             }
           }
@@ -590,8 +584,8 @@
               "raw": "{\n  \"comment\": \"Approved\"\n}"
             },
             "url": {
-              "raw": "{{time_command_base_url}}/api/timesheets/{{timesheet_id}}/approve",
-              "host": [ "{{time_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/timesheets/{{timesheet_id}}/approve",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "timesheets", "{{timesheet_id}}", "approve" ]
             }
           }
@@ -620,8 +614,8 @@
               "raw": "{\n  \"employeeId\": \"{{employee_id}}\",\n  \"leaveType\": \"Annual\",\n  \"startDate\": \"2026-04-10\",\n  \"endDate\": \"2026-04-12\",\n  \"reason\": \"Travel\"\n}"
             },
             "url": {
-              "raw": "{{time_command_base_url}}/api/leave-requests",
-              "host": [ "{{time_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/leave-requests",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "leave-requests" ]
             }
           }
@@ -631,8 +625,8 @@
           "request": {
             "method": "POST",
             "url": {
-              "raw": "{{time_command_base_url}}/api/leave-requests/{{leave_request_id}}/submit",
-              "host": [ "{{time_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/leave-requests/{{leave_request_id}}/submit",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "leave-requests", "{{leave_request_id}}", "submit" ]
             }
           }
@@ -649,8 +643,8 @@
               "raw": "{\n  \"leaveType\": \"Annual\",\n  \"delta\": 2,\n  \"reason\": \"Manual carry-over\"\n}"
             },
             "url": {
-              "raw": "{{time_command_base_url}}/api/leave-balances/{{employee_id}}/adjust",
-              "host": [ "{{time_command_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/leave-balances/{{employee_id}}/adjust",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "leave-balances", "{{employee_id}}", "adjust" ]
             }
           }
@@ -665,8 +659,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/time-entries?pageNumber=1&pageSize=20",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/time-entries?pageNumber=1&pageSize=20",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "time-entries" ],
               "query": [
                 { "key": "pageNumber", "value": "1" },
@@ -680,8 +674,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/time-entries/{{time_entry_id}}",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/time-entries/{{time_entry_id}}",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "time-entries", "{{time_entry_id}}" ]
             }
           }
@@ -691,8 +685,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/time-entries/by-employee/{{employee_id}}?from=2026-03-01&to=2026-03-31",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/time-entries/by-employee/{{employee_id}}?from=2026-03-01&to=2026-03-31",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "time-entries", "by-employee", "{{employee_id}}" ],
               "query": [
                 { "key": "from", "value": "2026-03-01" },
@@ -706,8 +700,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/time-entries/self?from=2026-03-01&to=2026-03-31",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/time-entries/self?from=2026-03-01&to=2026-03-31",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "time-entries", "self" ],
               "query": [
                 { "key": "from", "value": "2026-03-01" },
@@ -721,8 +715,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/timesheets?pageNumber=1&pageSize=20",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/timesheets?pageNumber=1&pageSize=20",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "timesheets" ],
               "query": [
                 { "key": "pageNumber", "value": "1" },
@@ -736,8 +730,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/timesheets/pending-approval?pageNumber=1&pageSize=20",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/timesheets/pending-approval?pageNumber=1&pageSize=20",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "timesheets", "pending-approval" ],
               "query": [
                 { "key": "pageNumber", "value": "1" },
@@ -751,8 +745,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/timesheets/by-employee/{{employee_id}}?periodStart=2026-03-01&periodEnd=2026-03-15",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/timesheets/by-employee/{{employee_id}}?periodStart=2026-03-01&periodEnd=2026-03-15",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "timesheets", "by-employee", "{{employee_id}}" ],
               "query": [
                 { "key": "periodStart", "value": "2026-03-01" },
@@ -766,8 +760,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/timesheets/self?periodStart=2026-03-01&periodEnd=2026-03-15",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/timesheets/self?periodStart=2026-03-01&periodEnd=2026-03-15",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "timesheets", "self" ],
               "query": [
                 { "key": "periodStart", "value": "2026-03-01" },
@@ -781,8 +775,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/leave-requests?pageNumber=1&pageSize=20",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/leave-requests?pageNumber=1&pageSize=20",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "leave-requests" ],
               "query": [
                 { "key": "pageNumber", "value": "1" },
@@ -796,8 +790,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/leave-requests/pending-approval?pageNumber=1&pageSize=20",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/leave-requests/pending-approval?pageNumber=1&pageSize=20",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "leave-requests", "pending-approval" ],
               "query": [
                 { "key": "pageNumber", "value": "1" },
@@ -811,8 +805,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/leave-requests/by-employee/{{employee_id}}",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/leave-requests/by-employee/{{employee_id}}",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "leave-requests", "by-employee", "{{employee_id}}" ]
             }
           }
@@ -822,8 +816,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/leave-requests/self",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/leave-requests/self",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "leave-requests", "self" ]
             }
           }
@@ -833,8 +827,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/leave-balances/self",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/leave-balances/self",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "leave-balances", "self" ]
             }
           }
@@ -844,8 +838,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/holidays?year=2026&country=MA",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/holidays?year=2026&country=MA",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "holidays" ],
               "query": [
                 { "key": "year", "value": "2026" },
@@ -859,8 +853,8 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{time_query_base_url}}/api/leave-types",
-              "host": [ "{{time_query_base_url}}" ],
+              "raw": "{{gateway_base_url}}/api/leave-types",
+              "host": [ "{{gateway_base_url}}" ],
               "path": [ "api", "leave-types" ]
             }
           }
@@ -903,8 +897,8 @@
                   "raw": "{\n  \"email\": \"{{hr_email}}\",\n  \"password\": \"{{hr_password}}\"\n}"
                 },
                 "url": {
-                  "raw": "{{account_command_base_url}}/api/auth/login",
-                  "host": [ "{{account_command_base_url}}" ],
+                  "raw": "{{gateway_base_url}}/api/auth/login",
+                  "host": [ "{{gateway_base_url}}" ],
                   "path": [ "api", "auth", "login" ]
                 }
               }
@@ -937,8 +931,8 @@
                   "raw": "{\n  \"email\": \"{{employee_email}}\",\n  \"password\": \"{{employee_password}}\",\n  \"firstName\": \"Evo\",\n  \"lastName\": \"Employee\",\n  \"role\": \"Employee\"\n}"
                 },
                 "url": {
-                  "raw": "{{account_command_base_url}}/api/accounts",
-                  "host": [ "{{account_command_base_url}}" ],
+                  "raw": "{{gateway_base_url}}/api/accounts",
+                  "host": [ "{{gateway_base_url}}" ],
                   "path": [ "api", "accounts" ]
                 }
               }
@@ -971,8 +965,8 @@
                   "raw": "{\n  \"employeeNumber\": \"EMP-EVO-1001\",\n  \"firstName\": \"Evo\",\n  \"lastName\": \"Employee\",\n  \"workEmail\": \"evolution.employee@workforcehub.local\",\n  \"personalEmail\": \"{{employee_email}}\",\n  \"phoneNumber\": \"+212633333333\",\n  \"address\": \"Casablanca, Morocco\",\n  \"dateOfBirth\": \"1999-04-12T00:00:00Z\",\n  \"jobTitle\": \"HR Assistant\",\n  \"department\": \"Human Resources\",\n  \"managerProfileId\": null,\n  \"employmentType\": \"FullTime\",\n  \"hireDate\": \"2026-04-01T00:00:00Z\",\n  \"organizationRole\": \"Employee\",\n  \"employmentStatus\": \"Active\",\n  \"accountId\": \"{{employee_account_id}}\"\n}"
                 },
                 "url": {
-                  "raw": "{{profile_command_base_url}}/api/profiles",
-                  "host": [ "{{profile_command_base_url}}" ],
+                  "raw": "{{gateway_base_url}}/api/profiles",
+                  "host": [ "{{gateway_base_url}}" ],
                   "path": [ "api", "profiles" ]
                 }
               }
@@ -989,8 +983,8 @@
                   "raw": "{\n  \"accountId\": \"{{employee_account_id}}\"\n}"
                 },
                 "url": {
-                  "raw": "{{profile_command_base_url}}/api/profiles/{{employee_profile_id}}/link-account",
-                  "host": [ "{{profile_command_base_url}}" ],
+                  "raw": "{{gateway_base_url}}/api/profiles/{{employee_profile_id}}/link-account",
+                  "host": [ "{{gateway_base_url}}" ],
                   "path": [ "api", "profiles", "{{employee_profile_id}}", "link-account" ]
                 }
               }
@@ -1025,8 +1019,8 @@
                   "raw": "{\n  \"email\": \"{{employee_email}}\",\n  \"password\": \"{{employee_password}}\"\n}"
                 },
                 "url": {
-                  "raw": "{{account_command_base_url}}/api/auth/login",
-                  "host": [ "{{account_command_base_url}}" ],
+                  "raw": "{{gateway_base_url}}/api/auth/login",
+                  "host": [ "{{gateway_base_url}}" ],
                   "path": [ "api", "auth", "login" ]
                 }
               }
@@ -1066,8 +1060,8 @@
                   "raw": "{\n  \"email\": \"{{hr_email}}\",\n  \"password\": \"{{hr_password}}\"\n}"
                 },
                 "url": {
-                  "raw": "{{account_command_base_url}}/api/auth/login",
-                  "host": [ "{{account_command_base_url}}" ],
+                  "raw": "{{gateway_base_url}}/api/auth/login",
+                  "host": [ "{{gateway_base_url}}" ],
                   "path": [ "api", "auth", "login" ]
                 }
               }
@@ -1495,8 +1489,8 @@
                   "raw": "{\n  \"email\": \"{{employee_email}}\",\n  \"password\": \"{{employee_password}}\"\n}"
                 },
                 "url": {
-                  "raw": "{{account_command_base_url}}/api/auth/login",
-                  "host": [ "{{account_command_base_url}}" ],
+                  "raw": "{{gateway_base_url}}/api/auth/login",
+                  "host": [ "{{gateway_base_url}}" ],
                   "path": [ "api", "auth", "login" ]
                 }
               }
