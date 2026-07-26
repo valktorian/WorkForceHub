@@ -1,6 +1,7 @@
 using Infrastructure.Api.Common;
 using Infrastructure.Api.Storage;
 using Microsoft.Extensions.Options;
+using SkiaSharp;
 
 namespace MediaService.Api.Services;
 
@@ -9,9 +10,8 @@ public class LocalMediaStorage : ILocalMediaStorage
     private static readonly HashSet<string> AllowedContentTypes = new(StringComparer.OrdinalIgnoreCase)
     {
         "image/jpeg",
-        "image/png",
-        "image/webp",
-        "image/gif"
+        "image/jpg",
+        "image/png"
     };
 
     private readonly LocalMediaStorageOptions _options;
@@ -36,7 +36,7 @@ public class LocalMediaStorage : ILocalMediaStorage
     {
         if (!AllowedContentTypes.Contains(file.ContentType))
         {
-            throw ApiException.BadRequest("Only JPEG, PNG, WEBP, and GIF images are supported.");
+            throw ApiException.BadRequest("Only JPG, JPEG, and PNG images are supported.");
         }
 
         var maxBytes = _options.MaxFileSizeMb * 1024L * 1024L;
@@ -45,18 +45,8 @@ public class LocalMediaStorage : ILocalMediaStorage
             throw ApiException.BadRequest($"Image exceeds the {_options.MaxFileSizeMb} MB limit.");
         }
 
-        var extension = Path.GetExtension(file.FileName);
-        if (string.IsNullOrWhiteSpace(extension))
-        {
-            extension = file.ContentType switch
-            {
-                "image/jpeg" => ".jpg",
-                "image/png" => ".png",
-                "image/webp" => ".webp",
-                "image/gif" => ".gif",
-                _ => ".bin"
-            };
-        }
+        const string extension = ".jpg";
+        var imageQuality = Math.Clamp(_options.ImageQuality, 1, 100);
 
         var normalizedCategory = string.IsNullOrWhiteSpace(category) ? "misc" : category.Trim().ToLowerInvariant();
         var relativeDirectory = Path.Combine(normalizedCategory, DateTime.UtcNow.ToString("yyyy"), DateTime.UtcNow.ToString("MM"));
@@ -67,16 +57,56 @@ public class LocalMediaStorage : ILocalMediaStorage
         var absolutePath = Path.Combine(absoluteDirectory, generatedFileName);
 
         await using var stream = file.OpenReadStream();
+        using var codec = SKCodec.Create(stream);
+
+        if (codec is null
+            || codec.EncodedFormat is not (SKEncodedImageFormat.Jpeg or SKEncodedImageFormat.Png))
+        {
+            throw ApiException.BadRequest("The uploaded file is not a valid JPG, JPEG, or PNG image.");
+        }
+
+        using var sourceBitmap = SKBitmap.Decode(codec);
+        if (sourceBitmap is null)
+        {
+            throw ApiException.BadRequest("The uploaded image could not be decoded.");
+        }
+
+        var outputInfo = new SKImageInfo(
+            sourceBitmap.Width,
+            sourceBitmap.Height,
+            SKColorType.Rgba8888,
+            SKAlphaType.Opaque);
+
+        using var outputBitmap = new SKBitmap(outputInfo);
+        using (var canvas = new SKCanvas(outputBitmap))
+        {
+            canvas.Clear(SKColors.White);
+            canvas.DrawBitmap(
+                sourceBitmap,
+                0,
+                0,
+                new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.None));
+            canvas.Flush();
+        }
+
+        using var outputImage = SKImage.FromBitmap(outputBitmap);
+        using var compressedImage = outputImage.Encode(SKEncodedImageFormat.Jpeg, imageQuality);
+        if (compressedImage is null)
+        {
+            throw ApiException.Internal("The uploaded image could not be compressed.");
+        }
+
         await using var target = File.Create(absolutePath);
-        await stream.CopyToAsync(target, cancellationToken);
+        compressedImage.SaveTo(target);
+        await target.FlushAsync(cancellationToken);
 
         var storageKey = string.Join('/', relativeDirectory.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries).Append(generatedFileName));
         var url = $"{_options.PublicBaseUrl.TrimEnd('/')}/media/{storageKey}";
 
         return new ExternalFileUploadResult(
             file.FileName,
-            file.ContentType,
-            file.Length,
+            "image/jpeg",
+            new FileInfo(absolutePath).Length,
             storageKey,
             url,
             DateTime.UtcNow);

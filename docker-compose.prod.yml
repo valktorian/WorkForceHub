@@ -167,7 +167,7 @@ services:
     container_name: account-service-command
     restart: always
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
       - Jwt__SecretKey=${JWT_SECRET_KEY:?JWT_SECRET_KEY is required}
       - ConnectionStrings__DefaultConnection=Host=postgres_write;Port=5432;Database=account_write;Username=${POSTGRES_USER:?POSTGRES_USER is required};Password=${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
@@ -184,7 +184,7 @@ services:
     container_name: account-service-query
     restart: always
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
       - Jwt__SecretKey=${JWT_SECRET_KEY:?JWT_SECRET_KEY is required}
       - ConnectionStrings__ReadDatabase=mongodb://${MONGO_INITDB_ROOT_USERNAME:?MONGO_INITDB_ROOT_USERNAME is required}:${MONGO_INITDB_ROOT_PASSWORD:?MONGO_INITDB_ROOT_PASSWORD is required}@mongo_read:27017/admin?authSource=admin
@@ -201,15 +201,18 @@ services:
     container_name: profile-service-command
     restart: always
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
       - Jwt__SecretKey=${JWT_SECRET_KEY:?JWT_SECRET_KEY is required}
       - ConnectionStrings__DefaultConnection=Host=postgres_write;Port=5432;Database=profile_write;Username=${POSTGRES_USER:?POSTGRES_USER is required};Password=${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
       - Kafka__BootstrapServers=kafka:9092
+      - MediaStorage__BaseUrl=http://media-service
+      - MediaStorage__InternalApiKey=${MEDIA_INTERNAL_API_KEY:?MEDIA_INTERNAL_API_KEY is required}
       - Jaeger__OtlpEndpoint=http://jaeger:4317
     depends_on:
       - postgres_write
       - kafka
+      - media-service
     profiles:
       - full
 
@@ -218,7 +221,7 @@ services:
     container_name: profile-service-query
     restart: always
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
       - Jwt__SecretKey=${JWT_SECRET_KEY:?JWT_SECRET_KEY is required}
       - ConnectionStrings__ReadDatabase=mongodb://${MONGO_INITDB_ROOT_USERNAME:?MONGO_INITDB_ROOT_USERNAME is required}:${MONGO_INITDB_ROOT_PASSWORD:?MONGO_INITDB_ROOT_PASSWORD is required}@mongo_read:27017/admin?authSource=admin
@@ -235,7 +238,7 @@ services:
     container_name: time-service-command
     restart: always
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
       - Jwt__SecretKey=${JWT_SECRET_KEY:?JWT_SECRET_KEY is required}
       - ConnectionStrings__DefaultConnection=Host=postgres_write;Port=5432;Database=time_write;Username=${POSTGRES_USER:?POSTGRES_USER is required};Password=${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
@@ -252,7 +255,7 @@ services:
     container_name: time-service-query
     restart: always
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
       - Jwt__SecretKey=${JWT_SECRET_KEY:?JWT_SECRET_KEY is required}
       - ConnectionStrings__ReadDatabase=mongodb://${MONGO_INITDB_ROOT_USERNAME:?MONGO_INITDB_ROOT_USERNAME is required}:${MONGO_INITDB_ROOT_PASSWORD:?MONGO_INITDB_ROOT_PASSWORD is required}@mongo_read:27017/admin?authSource=admin
@@ -269,7 +272,7 @@ services:
     container_name: evolution-service-command
     restart: always
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
       - Jwt__SecretKey=${JWT_SECRET_KEY:?JWT_SECRET_KEY is required}
       - ConnectionStrings__DefaultConnection=Host=postgres_write;Port=5432;Database=evolution_write;Username=${POSTGRES_USER:?POSTGRES_USER is required};Password=${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
@@ -286,7 +289,7 @@ services:
     container_name: evolution-service-query
     restart: always
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
       - Jwt__SecretKey=${JWT_SECRET_KEY:?JWT_SECRET_KEY is required}
       - ConnectionStrings__ReadDatabase=mongodb://${MONGO_INITDB_ROOT_USERNAME:?MONGO_INITDB_ROOT_USERNAME is required}:${MONGO_INITDB_ROOT_PASSWORD:?MONGO_INITDB_ROOT_PASSWORD is required}@mongo_read:27017/admin?authSource=admin
@@ -302,13 +305,16 @@ services:
     image: ghcr.io/valktorian/media-service:latest
     container_name: media-service
     restart: always
+    ports:
+      - "5199:80"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
       - Storage__InternalApiKey=${MEDIA_INTERNAL_API_KEY:?MEDIA_INTERNAL_API_KEY is required}
+      - Storage__PublicBaseUrl=${MEDIA_PUBLIC_BASE_URL:?MEDIA_PUBLIC_BASE_URL is required}
       - Jaeger__OtlpEndpoint=http://jaeger:4317
     volumes:
-      - media_uploads:/app/uploads
+      - ${MEDIA_UPLOADS_PATH:-media_uploads}:/app/uploads
     profiles:
       - full
 
