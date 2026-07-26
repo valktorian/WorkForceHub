@@ -117,7 +117,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5222
                                                       }
                                                   ],
@@ -131,7 +131,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5222
                                                       }
                                                   ],
@@ -154,7 +154,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5115
                                                       }
                                                   ],
@@ -173,7 +173,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5222
                                                       }
                                                   ],
@@ -193,7 +193,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5222
                                                       }
                                                   ],
@@ -212,7 +212,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5222
                                                       }
                                                   ],
@@ -231,7 +231,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5115
                                                       }
                                                   ],
@@ -250,7 +250,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5062
                                                       }
                                                   ],
@@ -269,7 +269,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5062
                                                       }
                                                   ],
@@ -288,7 +288,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5062
                                                       }
                                                   ],
@@ -308,7 +308,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5062
                                                       }
                                                   ],
@@ -328,7 +328,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5062
                                                       }
                                                   ],
@@ -347,7 +347,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5003
                                                       }
                                                   ],
@@ -366,7 +366,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5003
                                                       }
                                                   ],
@@ -385,7 +385,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5003
                                                       }
                                                   ],
@@ -404,7 +404,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5033
                                                       }
                                                   ],
@@ -423,7 +423,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5033
                                                       }
                                                   ],
@@ -443,7 +443,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5257
                                                       }
                                                   ],
@@ -462,7 +462,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5257
                                                       }
                                                   ],
@@ -481,7 +481,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5033
                                                       }
                                                   ],
@@ -500,7 +500,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5033
                                                       }
                                                   ],
@@ -519,7 +519,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5257
                                                       }
                                                   ],
@@ -538,7 +538,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5257
                                                       }
                                                   ],
@@ -557,7 +557,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5033
                                                       }
                                                   ],
@@ -576,7 +576,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5033
                                                       }
                                                   ],
@@ -595,7 +595,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5033
                                                       }
                                                   ],
@@ -614,7 +614,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5033
                                                       }
                                                   ],
@@ -633,7 +633,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5257
                                                       }
                                                   ],
@@ -652,7 +652,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5257
                                                       }
                                                   ],
@@ -671,7 +671,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5257
                                                       }
                                                   ],
@@ -690,7 +690,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5257
                                                       }
                                                   ],
@@ -709,7 +709,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5257
                                                       }
                                                   ],
@@ -728,7 +728,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5199
                                                       }
                                                   ],
@@ -747,7 +747,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5049
                                                       }
                                                   ],
@@ -766,7 +766,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5049
                                                       }
                                                   ],
@@ -786,7 +786,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5011
                                                       }
                                                   ],
@@ -805,7 +805,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5011
                                                       }
                                                   ],
@@ -824,7 +824,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5049
                                                       }
                                                   ],
@@ -843,7 +843,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5049
                                                       }
                                                   ],
@@ -863,7 +863,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5011
                                                       }
                                                   ],
@@ -882,7 +882,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5011
                                                       }
                                                   ],
@@ -901,7 +901,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5049
                                                       }
                                                   ],
@@ -920,7 +920,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5049
                                                       }
                                                   ],
@@ -940,7 +940,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5011
                                                       }
                                                   ],
@@ -959,7 +959,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5011
                                                       }
                                                   ],
@@ -978,7 +978,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5049
                                                       }
                                                   ],
@@ -997,7 +997,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5049
                                                       }
                                                   ],
@@ -1017,7 +1017,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5011
                                                       }
                                                   ],
@@ -1036,7 +1036,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5011
                                                       }
                                                   ],
@@ -1055,7 +1055,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5011
                                                       }
                                                   ],
@@ -1074,7 +1074,7 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "host.docker.internal",
+                                                          "Host":  "localhost",
                                                           "Port":  5049
                                                       }
                                                   ],
