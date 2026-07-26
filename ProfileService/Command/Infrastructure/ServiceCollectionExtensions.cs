@@ -47,6 +47,7 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddHostedService<ProfileOutboxPublisher>();
+        services.AddHostedService<OutboxCleanupWorker<ProfileCommandDbContext>>();
         return services;
     }
 }

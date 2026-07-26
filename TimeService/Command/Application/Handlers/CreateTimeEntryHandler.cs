@@ -1,48 +1,36 @@
 using Infrastructure.Api.Authentication;
 using Infrastructure.Api.Messaging;
+using Infrastructure.Api.Persistence;
+using TimeService.Command.Application.Abstractions;
 using TimeService.Command.Application.Commands;
 using TimeService.Command.Application.DTOs;
-using TimeService.Command.Domain.Events;
+using TimeService.Command.Domain;
 
 namespace TimeService.Command.Application.Handlers;
 
 public class CreateTimeEntryHandler : ICommandHandler<CreateTimeEntryCommand, CommandAcceptedResponse>
 {
-    private readonly IKafkaProducer _kafkaProducer;
+    private readonly ITimeCommandRepository<TimeEntry> _repository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserAccessor _currentUserAccessor;
 
-    public CreateTimeEntryHandler(IKafkaProducer kafkaProducer, ICurrentUserAccessor currentUserAccessor)
+    public CreateTimeEntryHandler(
+        ITimeCommandRepository<TimeEntry> repository,
+        IUnitOfWork unitOfWork,
+        ICurrentUserAccessor currentUserAccessor)
     {
-        _kafkaProducer = kafkaProducer;
+        _repository = repository;
+        _unitOfWork = unitOfWork;
         _currentUserAccessor = currentUserAccessor;
     }
 
     public async Task<CommandAcceptedResponse> HandleAsync(CreateTimeEntryCommand command, CancellationToken cancellationToken = default)
     {
-        var timeEntryId = Guid.NewGuid();
-        var now = DateTime.UtcNow;
-        var hours = Math.Round((decimal)(command.EndTime - command.StartTime).TotalHours, 2, MidpointRounding.AwayFromZero);
-        var accountId = _currentUserAccessor.GetRequiredAccountId();
-
-        var evt = new TimeEntryCreatedEvent
-        {
-            TimeEntryId = timeEntryId,
-            AccountId = accountId,
-            EmployeeId = command.EmployeeId,
-            WorkDate = command.WorkDate.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc),
-            StartTime = command.StartTime.ToString("HH:mm"),
-            EndTime = command.EndTime.ToString("HH:mm"),
-            Hours = hours,
-            ProjectCode = command.ProjectCode,
-            TaskCode = command.TaskCode,
-            Notes = command.Notes,
-            Status = "Draft",
-            CreatedAt = now,
-            UpdatedAt = now
-        };
-
-        await _kafkaProducer.ProduceAsync(evt, evt, "time.events");
-
-        return new CommandAcceptedResponse(timeEntryId, evt.Status, "Time entry create request accepted.", evt);
+        var entity = TimeEntry.Create(_currentUserAccessor.GetRequiredAccountId(), command.EmployeeId,
+            command.WorkDate, command.StartTime, command.EndTime, command.ProjectCode, command.TaskCode, command.Notes);
+        var evt = TimeEventFactory.Created(entity);
+        await _repository.AddAsync(entity, evt, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        return new CommandAcceptedResponse(entity.Id, entity.Status, "Time entry created.", evt);
     }
 }

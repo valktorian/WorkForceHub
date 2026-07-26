@@ -1,3 +1,4 @@
+using Infrastructure.Api.Authentication;
 using Infrastructure.Api.Constants;
 using Infrastructure.Api.Messaging;
 using Microsoft.AspNetCore.Authorization;
@@ -14,10 +15,14 @@ namespace TimeService.Command.Api.Controllers;
 public class TimeEntriesController : ControllerBase
 {
     private readonly ICommandDispatcher _dispatcher;
+    private readonly ICurrentUserAccessor _currentUserAccessor;
 
-    public TimeEntriesController(ICommandDispatcher dispatcher)
+    public TimeEntriesController(
+        ICommandDispatcher dispatcher,
+        ICurrentUserAccessor currentUserAccessor)
     {
         _dispatcher = dispatcher;
+        _currentUserAccessor = currentUserAccessor;
     }
 
     [HttpPost]
@@ -33,11 +38,16 @@ public class TimeEntriesController : ControllerBase
         => Ok(await _dispatcher.SendAsync<UpdateTimeEntryCommand, CommandAcceptedResponse>(command with { Id = id }, ct));
 
     [HttpDelete("{id:guid}")]
-    [Authorize(Roles = RoleConstants.HrAdmin)]
+    [Authorize(Roles = RoleConstants.EmployeeOrHrAdmin)]
     [SwaggerOperation(Summary = "Delete a time entry.")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {
-        await _dispatcher.SendAsync<DeleteTimeEntryCommand, CommandAcceptedResponse>(new DeleteTimeEntryCommand(id), ct);
+        var command = new DeleteTimeEntryCommand(
+            id,
+            _currentUserAccessor.GetRequiredAccountId(),
+            User.IsInRole(RoleConstants.HrAdmin));
+
+        await _dispatcher.SendAsync<DeleteTimeEntryCommand, CommandAcceptedResponse>(command, ct);
         return NoContent();
     }
 }
