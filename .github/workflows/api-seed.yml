@@ -11,6 +11,11 @@ on:
         description: Stable namespace; change only when you want a new seed batch
         required: false
         default: "demo-v1"
+      cleanup_after:
+        description: Clean records that expose a supported cleanup operation
+        required: false
+        type: boolean
+        default: false
   schedule:
     - cron: "17 3 * * *"
 
@@ -48,5 +53,5 @@ jobs:
           SEED_ACCOUNT_PASSWORD: ${{ secrets.SEED_ACCOUNT_PASSWORD }}
           SEED_RUNS: ${{ inputs.seed_runs || '10' }}
           SEED_NAMESPACE: ${{ inputs.seed_namespace || 'demo-v1' }}
-          SEED_CLEANUP_AFTER: "true"
+          SEED_CLEANUP_AFTER: ${{ inputs.cleanup_after || 'false' }}
         run: python scripts/seed_api.py

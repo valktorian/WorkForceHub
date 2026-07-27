@@ -24,7 +24,9 @@ public static class ServiceCollectionExtensions
         services.AddDbContext<TimeCommandDbContext>(options => options.UseNpgsql(connectionString));
         services.AddScoped<IUnitOfWork, UnitOfWork<TimeCommandDbContext>>();
         services.AddScoped<ITimeCommandRepository<TimeEntry>, TimeCommandRepository<TimeEntry>>();
-        services.AddScoped<ITimeCommandRepository<Timesheet>, TimeCommandRepository<Timesheet>>();
+        services.AddScoped<ITimesheetRepository, TimesheetRepository>();
+        services.AddScoped<ITimeCommandRepository<Timesheet>>(sp =>
+            sp.GetRequiredService<ITimesheetRepository>());
         services.AddScoped<ITimeCommandRepository<LeaveRequest>, TimeCommandRepository<LeaveRequest>>();
         services.AddScoped<ILeaveBalanceRepository, LeaveBalanceRepository>();
 

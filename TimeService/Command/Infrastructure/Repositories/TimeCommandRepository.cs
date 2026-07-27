@@ -76,3 +76,27 @@ public sealed class LeaveBalanceRepository
             cancellationToken);
     }
 }
+
+public sealed class TimesheetRepository
+    : TimeCommandRepository<Timesheet>, ITimesheetRepository
+{
+    public TimesheetRepository(TimeCommandDbContext dbContext)
+        : base(dbContext)
+    {
+    }
+
+    public Task<Timesheet?> GetByEmployeeAndPeriodAsync(
+        Guid employeeId,
+        DateOnly periodStart,
+        DateOnly periodEnd,
+        CancellationToken cancellationToken = default)
+    {
+        var start = periodStart.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
+        var end = periodEnd.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
+        return DbContext.Timesheets.FirstOrDefaultAsync(
+            x => x.EmployeeId == employeeId &&
+                 x.PeriodStart == start &&
+                 x.PeriodEnd == end,
+            cancellationToken);
+    }
+}

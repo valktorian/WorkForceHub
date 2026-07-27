@@ -19,3 +19,12 @@ public interface ILeaveBalanceRepository : ITimeCommandRepository<LeaveBalance>
         string leaveType,
         CancellationToken cancellationToken = default);
 }
+
+public interface ITimesheetRepository : ITimeCommandRepository<Timesheet>
+{
+    Task<Timesheet?> GetByEmployeeAndPeriodAsync(
+        Guid employeeId,
+        DateOnly periodStart,
+        DateOnly periodEnd,
+        CancellationToken cancellationToken = default);
+}

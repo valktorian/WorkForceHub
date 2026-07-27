@@ -10,11 +10,11 @@ namespace TimeService.Command.Application.Handlers;
 
 public class CreateTimesheetHandler : ICommandHandler<CreateTimesheetCommand, CommandAcceptedResponse>
 {
-    private readonly ITimeCommandRepository<Timesheet> _repository;
+    private readonly ITimesheetRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserAccessor _currentUserAccessor;
 
-    public CreateTimesheetHandler(ITimeCommandRepository<Timesheet> repository, IUnitOfWork unitOfWork, ICurrentUserAccessor currentUserAccessor)
+    public CreateTimesheetHandler(ITimesheetRepository repository, IUnitOfWork unitOfWork, ICurrentUserAccessor currentUserAccessor)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
@@ -23,6 +23,20 @@ public class CreateTimesheetHandler : ICommandHandler<CreateTimesheetCommand, Co
 
     public async Task<CommandAcceptedResponse> HandleAsync(CreateTimesheetCommand command, CancellationToken cancellationToken = default)
     {
+        var existing = await _repository.GetByEmployeeAndPeriodAsync(
+            command.EmployeeId,
+            command.PeriodStart,
+            command.PeriodEnd,
+            cancellationToken);
+        if (existing is not null)
+        {
+            return new CommandAcceptedResponse(
+                existing.Id,
+                existing.Status,
+                "Timesheet already exists.",
+                null);
+        }
+
         var entity = Timesheet.Create(_currentUserAccessor.GetRequiredAccountId(), command.EmployeeId,
             command.PeriodStart, command.PeriodEnd);
         var evt = TimeEventFactory.Created(entity);

@@ -338,8 +338,13 @@ def ensure_record(name: str, exists: bool, create: Any, cleanup: Any | None = No
 
     response = create()
     if response.ok:
+        response_value = response_data(response)
+        if "already exists" in str(response_value.get("message", "")).lower():
+            print(f"{name} already exists")
+            return
+
         print(f"Created {name}")
-        created_id = response_data(response).get("id")
+        created_id = response_value.get("id")
         if cleanup is not None and created_id:
             cleanup(created_id)
         return
@@ -474,7 +479,7 @@ SEED_RUNS = int(os.getenv("SEED_RUNS") or "10")
 SEED_NAMESPACE = normalize_token(os.getenv("SEED_NAMESPACE") or "demo-v1")
 SEED_PASSWORD = os.getenv("SEED_ACCOUNT_PASSWORD") or "CHANGE_ME_DEMO_PASSWORD"
 RANDOM_MODE = (os.getenv("SEED_RANDOM") or "").lower() == "true"
-CLEANUP_AFTER = (os.getenv("SEED_CLEANUP_AFTER") or "true").lower() != "false"
+CLEANUP_AFTER = (os.getenv("SEED_CLEANUP_AFTER") or "false").lower() == "true"
 
 
 if __name__ == "__main__":
