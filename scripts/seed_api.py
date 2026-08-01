@@ -55,7 +55,8 @@ def seed_employee(index: int) -> None:
     if created_account.get("status") == "created":
         print(f"Created account {person['email']}")
     else:
-        print(f"Account already exists {person['email']}")
+        print(f"Account already exists {person['email']}; skipping")
+        return
 
     login = request("POST", "/api/auth/login", body={
         "email": person["email"],
@@ -80,9 +81,10 @@ def seed_employee(index: int) -> None:
     if created_profile.get("status") == "created":
         print(f"Created profile {person['employeeNumber']}")
     else:
-        print(f"Profile already exists {person['employeeNumber']}")
+        print(f"Profile already exists {person['employeeNumber']}; skipping")
+        return
 
-    profile_id = created_profile.get("profileId") or find_profile_id_by_account(account_id, token)
+    profile_id = created_profile.get("profileId")
     if not profile_id:
         raise RuntimeError(f"Could not resolve profile id for account {account_id}.")
 
@@ -140,15 +142,6 @@ def create_profile(person: dict[str, Any], account_id: str, token: str) -> dict[
         return {"status": "exists"}
 
     raise RuntimeError(f"Could not create profile {person['employeeNumber']}: {response.status} {response.text}")
-
-
-def find_profile_id_by_account(account_id: str, token: str) -> str | None:
-    response = request("GET", f"/api/profiles/by-account/{account_id}", token=token)
-    if not response.ok:
-        return None
-
-    profile = response_data(response)
-    return profile.get("id")
 
 
 def seed_domain_records(person: dict[str, Any], employee_id: str, token: str) -> None:
