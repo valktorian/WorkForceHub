@@ -62,9 +62,10 @@ builder.Services.AddHostedService(sp =>
 
 var app = builder.Build();
 
+app.UseSwagger();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
     app.UseSwaggerUI();
 }
 

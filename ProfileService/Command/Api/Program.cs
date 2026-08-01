@@ -43,9 +43,10 @@ var app = builder.Build();
 
 await app.ApplyMigrationsAsync<ProfileCommandDbContext>();
 
+app.UseSwagger();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
     app.UseSwaggerUI();
 }
 

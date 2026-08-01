@@ -49,9 +49,10 @@ builder.Services.AddScoped<ICommandDispatcher, CommandDispatcher>();
 var app = builder.Build();
 await app.ApplyMigrationsAsync<TimeCommandDbContext>();
 
+app.UseSwagger();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
     app.UseSwaggerUI();
 }
 

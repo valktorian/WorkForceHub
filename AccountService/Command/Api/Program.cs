@@ -44,9 +44,10 @@ var app = builder.Build();
 
 await app.ApplyMigrationsAsync<AccountCommandDbContext>();
 
+app.UseSwagger();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
     app.UseSwaggerUI();
 }
 
