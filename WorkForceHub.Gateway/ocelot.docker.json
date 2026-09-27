@@ -47,29 +47,6 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
-                                                          "Host":  "account-service-command",
-                                                          "Port":  80
-                                                      }
-                                                  ],
-                       "UpstreamPathTemplate":  "/api/accounts",
-                       "UpstreamHttpMethod":  [
-                                                  "POST"
-                                              ],
-                       "RateLimitOptions":  {
-                                                "ClientWhitelist":  [
-
-                                                                    ],
-                                                "EnableRateLimiting":  true,
-                                                "Period":  "1m",
-                                                "PeriodTimespan":  60,
-                                                "Limit":  100
-                                            }
-                   },
-                   {
-                       "DownstreamPathTemplate":  "/api/accounts",
-                       "DownstreamScheme":  "http",
-                       "DownstreamHostAndPorts":  [
-                                                      {
                                                           "Host":  "account-service-query",
                                                           "Port":  80
                                                       }

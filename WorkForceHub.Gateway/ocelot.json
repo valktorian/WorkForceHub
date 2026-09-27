@@ -132,29 +132,6 @@
                        "DownstreamHostAndPorts":  [
                                                       {
                                                           "Host":  "localhost",
-                                                          "Port":  5222
-                                                      }
-                                                  ],
-                       "UpstreamPathTemplate":  "/api/accounts",
-                       "UpstreamHttpMethod":  [
-                                                  "POST"
-                                              ],
-                       "RateLimitOptions":  {
-                                                "ClientWhitelist":  [
-
-                                                                    ],
-                                                "EnableRateLimiting":  true,
-                                                "Period":  "1m",
-                                                "PeriodTimespan":  60,
-                                                "Limit":  100
-                                            }
-                   },
-                   {
-                       "DownstreamPathTemplate":  "/api/accounts",
-                       "DownstreamScheme":  "http",
-                       "DownstreamHostAndPorts":  [
-                                                      {
-                                                          "Host":  "localhost",
                                                           "Port":  5115
                                                       }
                                                   ],
