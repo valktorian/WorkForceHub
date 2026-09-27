@@ -1,0 +1,4 @@
+{$API_DOMAIN} {
+	encode gzip
+	reverse_proxy workforcehub-gateway:80
+}

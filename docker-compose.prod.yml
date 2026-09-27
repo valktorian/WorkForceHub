@@ -146,17 +146,38 @@ services:
     profiles:
       - full
 
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      - API_DOMAIN=${API_DOMAIN:?API_DOMAIN is required}
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - workforcehub-gateway
+    profiles:
+      - minimal
+      - full
+
   workforcehub-gateway:
     image: ghcr.io/valktorian/workforcehub-gateway:latest
     container_name: workforcehub-gateway
     restart: always
     ports:
-      - "5000:80"
+      - "127.0.0.1:5000:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
       - Jwt__SecretKey=${JWT_SECRET_KEY:?JWT_SECRET_KEY is required}
       - Storage__InternalApiKey=${MEDIA_INTERNAL_API_KEY:?MEDIA_INTERNAL_API_KEY is required}
+      - Gateway__Cors__AllowedOrigins__0=${FRONTEND_ORIGIN:-http://localhost:4200}
       - Jaeger__OtlpEndpoint=http://jaeger:4317
     profiles:
       - minimal
@@ -306,7 +327,7 @@ services:
     container_name: media-service
     restart: always
     ports:
-      - "5199:80"
+      - "127.0.0.1:5199:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
@@ -324,3 +345,5 @@ volumes:
   kafka_data:
   media_uploads:
   prometheus_data:
+  caddy_data:
+  caddy_config:
