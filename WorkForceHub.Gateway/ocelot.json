@@ -132,6 +132,25 @@
                        "DownstreamHostAndPorts":  [
                                                       {
                                                           "Host":  "localhost",
+                                                          "Port":  5222
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/accounts",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/accounts",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
+                                                          "Host":  "localhost",
                                                           "Port":  5115
                                                       }
                                                   ],

@@ -1,6 +1,7 @@
 using AccountService.Query.Domain;
 using AccountService.Query.Infrastructure;
 using Infrastructure.Api.Common;
+using Infrastructure.Api.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -10,7 +11,7 @@ namespace AccountService.Query.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Roles = RoleConstants.HrAdmin)]
 public class AccountsController : ControllerBase
 {
     private readonly ReadDbContext _readDb;

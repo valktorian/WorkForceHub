@@ -47,6 +47,25 @@
                        "DownstreamScheme":  "http",
                        "DownstreamHostAndPorts":  [
                                                       {
+                                                          "Host":  "account-service-command",
+                                                          "Port":  80
+                                                      }
+                                                  ],
+                       "UpstreamPathTemplate":  "/api/accounts",
+                       "UpstreamHttpMethod":  [
+                                                  "POST"
+                                              ],
+                       "AuthenticationOptions":  {
+                                                     "AuthenticationProviderKeys":  [
+                                                                                        "Bearer"
+                                                                                    ]
+                                                 }
+                   },
+                   {
+                       "DownstreamPathTemplate":  "/api/accounts",
+                       "DownstreamScheme":  "http",
+                       "DownstreamHostAndPorts":  [
+                                                      {
                                                           "Host":  "account-service-query",
                                                           "Port":  80
                                                       }

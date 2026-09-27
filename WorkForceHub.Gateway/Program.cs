@@ -47,12 +47,6 @@ var app = builder.Build();
 
 var swaggerSources = builder.Configuration.GetSection("SwaggerSources").Get<Dictionary<string, string[]>>() ?? new Dictionary<string, string[]>();
 
-// Operations served by downstream services but intentionally not routed through the gateway.
-var hiddenOperations = new HashSet<(string Path, string Method)>
-{
-    ("/api/accounts", "post"),
-};
-
 app.UseHttpsRedirection();
 app.UseCors("GatewayCors");
 UseCorrelationId(app);
@@ -109,7 +103,7 @@ app.MapGet("/gateway-docs/v1/openapi.json", async (IHttpClientFactory httpClient
 
             if (json["paths"] is JsonObject paths)
                 foreach (var path in paths)
-                    MergeSwaggerPath((JsonObject)merged["paths"]!, path.Key, path.Value, hiddenOperations);
+                    MergeSwaggerPath((JsonObject)merged["paths"]!, path.Key, path.Value);
 
             if (json["components"]?["schemas"] is JsonObject schemas)
                 foreach (var schema in schemas)
@@ -141,7 +135,7 @@ static async Task<JsonObject?> TryFetchSwaggerDocumentAsync(HttpClient client, I
     return null;
 }
 
-static void MergeSwaggerPath(JsonObject targetPaths, string pathKey, JsonNode? sourcePath, IReadOnlySet<(string Path, string Method)> hiddenOperations)
+static void MergeSwaggerPath(JsonObject targetPaths, string pathKey, JsonNode? sourcePath)
 {
     if (sourcePath is not JsonObject sourceOperations)
     {
@@ -150,23 +144,13 @@ static void MergeSwaggerPath(JsonObject targetPaths, string pathKey, JsonNode? s
 
     if (targetPaths[pathKey] is not JsonObject targetOperations)
     {
-        targetOperations = new JsonObject();
-        targetPaths[pathKey] = targetOperations;
+        targetPaths[pathKey] = sourceOperations.DeepClone();
+        return;
     }
 
     foreach (var operation in sourceOperations)
     {
-        if (hiddenOperations.Contains((pathKey.ToLowerInvariant(), operation.Key.ToLowerInvariant())))
-        {
-            continue;
-        }
-
         targetOperations[operation.Key] = operation.Value?.DeepClone();
-    }
-
-    if (targetOperations.Count == 0)
-    {
-        targetPaths.Remove(pathKey);
     }
 }
 

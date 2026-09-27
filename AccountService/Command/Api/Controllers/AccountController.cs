@@ -1,5 +1,6 @@
 using AccountService.Command.Application.Commands;
 using AccountService.Command.Application.DTOs;
+using Infrastructure.Api.Constants;
 using Infrastructure.Api.Messaging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace AccountService.Command.Api.Controllers;
 
 [ApiController]
 [Route("api/accounts")]
-[Authorize]
+[Authorize(Roles = RoleConstants.HrAdmin)]
 public class AccountController : ControllerBase
 {
     private readonly ICommandDispatcher _dispatcher;
@@ -26,7 +27,6 @@ public class AccountController : ControllerBase
     /// <param name="ct">The request cancellation token.</param>
     /// <returns>The created account response.</returns>
     [HttpPost]
-    [AllowAnonymous]
     [SwaggerOperation(Summary = "Create a new account.")]
     [ProducesResponseType(typeof(CreateAccountResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
