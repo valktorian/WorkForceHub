@@ -1,4 +1,5 @@
 using Infrastructure.Api.Base;
+using Infrastructure.Api.Constants;
 
 namespace AccountService.Command.Domain;
 
@@ -27,7 +28,7 @@ public class Account : BaseEntity
             Email = email,
             FirstName = firstName.Trim(),
             LastName = lastName.Trim(),
-            Role = role.Trim(),
+            Role = RoleConstants.Normalize(role),
             IsActive = true,
             CreatedAt = now,
             UpdatedAt = now,
@@ -50,7 +51,7 @@ public class Account : BaseEntity
 
     public void UpdateRole(string role)
     {
-        Role = role.Trim();
+        Role = RoleConstants.Normalize(role);
         UpdatedAt = DateTime.UtcNow;
     }
 }
