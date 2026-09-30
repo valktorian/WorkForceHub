@@ -1,5 +1,6 @@
 using EvolutionService.Command.Application.Commands;
 using EvolutionService.Command.Application.DTOs;
+using Infrastructure.Api.Constants;
 using Infrastructure.Api.Messaging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,25 +13,24 @@ namespace EvolutionService.Command.Api.Controllers;
 [Authorize]
 public class RewardsController : ControllerBase
 {
-    private const string WriterRoles = "HRAdmin,HRManager,Manager";
     private readonly ICommandDispatcher _dispatcher;
 
     public RewardsController(ICommandDispatcher dispatcher) => _dispatcher = dispatcher;
 
     [HttpPost]
-    [Authorize(Roles = WriterRoles)]
+    [Authorize(Roles = RoleConstants.EvolutionUsers)]
     [SwaggerOperation(Summary = "Create a reward.")]
     public Task<IActionResult> Create([FromBody] CreateRewardCommand command, CancellationToken ct)
         => Dispatch(command, ct);
 
     [HttpPut("{id:guid}")]
-    [Authorize(Roles = WriterRoles)]
+    [Authorize(Roles = RoleConstants.EvolutionUsers)]
     [SwaggerOperation(Summary = "Update a reward.")]
     public Task<IActionResult> Update(Guid id, [FromBody] UpdateRewardCommand command, CancellationToken ct)
         => Dispatch(command with { Id = id }, ct);
 
     [HttpDelete("{id:guid}")]
-    [Authorize(Roles = WriterRoles)]
+    [Authorize(Roles = RoleConstants.EvolutionUsers)]
     [SwaggerOperation(Summary = "Delete a reward.")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {

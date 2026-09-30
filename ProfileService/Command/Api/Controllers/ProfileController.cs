@@ -1,5 +1,6 @@
 using Infrastructure.Api.Authentication;
 using Infrastructure.Api.Common;
+using Infrastructure.Api.Constants;
 using Infrastructure.Api.Messaging;
 using Infrastructure.Api.Storage;
 using Microsoft.AspNetCore.Authorization;
@@ -17,8 +18,6 @@ namespace ProfileService.Command.Api.Controllers;
 [Authorize]
 public class ProfileController : ControllerBase
 {
-    private const string HrRoles = "HRAdmin,HRManager";
-
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNameCaseInsensitive = true
@@ -36,7 +35,7 @@ public class ProfileController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = HrRoles)]
+    [Authorize(Roles = RoleConstants.HrStaff)]
     [Consumes("application/json")]
     [SwaggerOperation(Summary = "Create a profile.")]
     public async Task<IActionResult> Create([FromBody] CreateProfileCommand command, CancellationToken ct)
@@ -46,7 +45,7 @@ public class ProfileController : ControllerBase
     }
 
     [HttpPost("with-picture")]
-    [Authorize(Roles = HrRoles)]
+    [Authorize(Roles = RoleConstants.HrStaff)]
     [Consumes("multipart/form-data")]
     [SwaggerOperation(Summary = "Create a profile with a picture.")]
     public async Task<IActionResult> CreateWithPicture([FromForm] CreateProfileFormRequest request, CancellationToken ct)
@@ -84,7 +83,7 @@ public class ProfileController : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    [Authorize(Roles = HrRoles)]
+    [Authorize(Roles = RoleConstants.HrStaff)]
     [SwaggerOperation(Summary = "Update a profile.")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProfileCommand command, CancellationToken ct)
     {
@@ -93,7 +92,7 @@ public class ProfileController : ControllerBase
     }
 
     [HttpPatch("{id:guid}/employment")]
-    [Authorize(Roles = HrRoles)]
+    [Authorize(Roles = RoleConstants.HrStaff)]
     [SwaggerOperation(Summary = "Update profile employment details.")]
     public async Task<IActionResult> UpdateEmployment(Guid id, [FromBody] UpdateProfileEmploymentCommand command, CancellationToken ct)
     {
@@ -102,7 +101,7 @@ public class ProfileController : ControllerBase
     }
 
     [HttpPatch("{id:guid}/status")]
-    [Authorize(Roles = HrRoles)]
+    [Authorize(Roles = RoleConstants.HrStaff)]
     [SwaggerOperation(Summary = "Update a profile employment status.")]
     public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateProfileStatusCommand command, CancellationToken ct)
     {
@@ -111,7 +110,7 @@ public class ProfileController : ControllerBase
     }
 
     [HttpPost("{id:guid}/link-account")]
-    [Authorize(Roles = HrRoles)]
+    [Authorize(Roles = RoleConstants.HrStaff)]
     [SwaggerOperation(Summary = "Link a profile to an account.")]
     public async Task<IActionResult> LinkAccount(Guid id, [FromBody] LinkProfileAccountCommand command, CancellationToken ct)
     {
@@ -131,7 +130,7 @@ public class ProfileController : ControllerBase
     }
 
     [HttpPost("{id:guid}/picture")]
-    [Authorize(Roles = HrRoles)]
+    [Authorize(Roles = RoleConstants.HrStaff)]
     [SwaggerOperation(Summary = "Upload a profile picture.")]
     public async Task<IActionResult> UploadProfilePicture(Guid id, IFormFile? file, CancellationToken ct)
     {
@@ -156,7 +155,7 @@ public class ProfileController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
-    [Authorize(Roles = HrRoles)]
+    [Authorize(Roles = RoleConstants.HrStaff)]
     [SwaggerOperation(Summary = "Delete a profile.")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {

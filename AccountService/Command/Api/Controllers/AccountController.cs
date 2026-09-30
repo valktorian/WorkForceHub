@@ -10,7 +10,7 @@ namespace AccountService.Command.Api.Controllers;
 
 [ApiController]
 [Route("api/accounts")]
-[Authorize(Roles = RoleConstants.HrAdmin)]
+[Authorize(Roles = RoleConstants.AccountAdmins)]
 public class AccountController : ControllerBase
 {
     private readonly ICommandDispatcher _dispatcher;

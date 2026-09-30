@@ -2,6 +2,7 @@ using EvolutionService.Query.Domain;
 using EvolutionService.Query.Domain.Repositories;
 using EvolutionService.Query.Infrastructure;
 using Infrastructure.Api.Common;
+using Infrastructure.Api.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -15,7 +16,6 @@ namespace EvolutionService.Query.Api.Controllers;
 [Authorize]
 public class RewardsController : ControllerBase
 {
-    private const string ReaderRoles = "HRAdmin,HRManager,Manager";
     private readonly IEvolutionReadRepository<RewardReadModel> _repository;
     private readonly ReadDbContext _readDbContext;
 
@@ -26,7 +26,7 @@ public class RewardsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = ReaderRoles)]
+    [Authorize(Roles = RoleConstants.EvolutionUsers)]
     [SwaggerOperation(Summary = "List rewards.")]
     public async Task<IActionResult> GetAll([FromQuery] PaginationRequest pagination, CancellationToken ct)
     {
@@ -36,7 +36,7 @@ public class RewardsController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    [Authorize(Roles = ReaderRoles)]
+    [Authorize(Roles = RoleConstants.EvolutionUsers)]
     [SwaggerOperation(Summary = "Get a reward by ID.")]
     public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
     {
@@ -45,7 +45,7 @@ public class RewardsController : ControllerBase
     }
 
     [HttpGet("employee/{employeeId:guid}")]
-    [Authorize(Roles = ReaderRoles)]
+    [Authorize(Roles = RoleConstants.EvolutionUsers)]
     [SwaggerOperation(Summary = "List rewards for an employee.")]
     public async Task<IActionResult> GetByEmployee(Guid employeeId, CancellationToken ct)
         => Ok(BaseResponse<IReadOnlyList<RewardReadModel>>.Ok(await _repository.GetByEmployeeAsync(employeeId, ct)));

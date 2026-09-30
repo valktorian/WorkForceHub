@@ -32,7 +32,7 @@ public class TimeEntriesController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = RoleConstants.ManagerOrHrAdmin)]
+    [Authorize(Roles = RoleConstants.TimeReviewers)]
     [SwaggerOperation(Summary = "List time entries.")]
     public async Task<IActionResult> GetAll([FromQuery] PaginationRequest pagination, CancellationToken ct)
     {
@@ -43,7 +43,7 @@ public class TimeEntriesController : ControllerBase
     }
 
     [HttpGet("by-employee/{employeeId:guid}")]
-    [Authorize(Roles = RoleConstants.ManagerOrHrAdmin)]
+    [Authorize(Roles = RoleConstants.TimeReviewers)]
     [SwaggerOperation(Summary = "List time entries for an employee.")]
     public async Task<IActionResult> GetByEmployee(Guid employeeId, [FromQuery] DateOnly? from, [FromQuery] DateOnly? to, CancellationToken ct)
         => Ok(BaseResponse<IReadOnlyList<TimeEntryReadModel>>.Ok(await _repository.GetByEmployeeAsync(employeeId, from, to, ct)));

@@ -14,7 +14,4 @@ public static class RoleConstants
     public const string TimeReviewers = Manager + "," + TimeAdmins;
     public const string TimeUsers = Employee + "," + TimeReviewers;
     public const string TimeEntryDeleters = Employee + "," + TimeAdmins;
-    public const string EmployeeOrHrAdmin = "Employee,HRAdmin";
-    public const string ManagerOrHrAdmin = "Manager,HRAdmin";
-    public const string EmployeeManagerOrHrAdmin = "Employee,Manager,HRAdmin";
 }

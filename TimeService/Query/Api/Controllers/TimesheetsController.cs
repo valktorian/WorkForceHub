@@ -32,7 +32,7 @@ public class TimesheetsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = RoleConstants.ManagerOrHrAdmin)]
+    [Authorize(Roles = RoleConstants.TimeReviewers)]
     [SwaggerOperation(Summary = "List timesheets.")]
     public async Task<IActionResult> GetAll([FromQuery] PaginationRequest pagination, CancellationToken ct)
     {
@@ -43,13 +43,13 @@ public class TimesheetsController : ControllerBase
     }
 
     [HttpGet("by-employee/{employeeId:guid}")]
-    [Authorize(Roles = RoleConstants.ManagerOrHrAdmin)]
+    [Authorize(Roles = RoleConstants.TimeReviewers)]
     [SwaggerOperation(Summary = "List timesheets for an employee.")]
     public async Task<IActionResult> GetByEmployee(Guid employeeId, [FromQuery] DateOnly? periodStart, [FromQuery] DateOnly? periodEnd, CancellationToken ct)
         => Ok(BaseResponse<IReadOnlyList<TimesheetReadModel>>.Ok(await _repository.GetByEmployeeAsync(employeeId, periodStart, periodEnd, ct)));
 
     [HttpGet("pending-approval")]
-    [Authorize(Roles = RoleConstants.ManagerOrHrAdmin)]
+    [Authorize(Roles = RoleConstants.TimeReviewers)]
     [SwaggerOperation(Summary = "List timesheets pending approval.")]
     public async Task<IActionResult> GetPendingApproval([FromQuery] PaginationRequest pagination, CancellationToken ct)
     {

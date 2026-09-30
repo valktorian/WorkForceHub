@@ -2,6 +2,7 @@ using EvolutionService.Query.Domain;
 using EvolutionService.Query.Domain.Repositories;
 using EvolutionService.Query.Infrastructure;
 using Infrastructure.Api.Common;
+using Infrastructure.Api.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -15,7 +16,6 @@ namespace EvolutionService.Query.Api.Controllers;
 [Authorize]
 public class JobMovementsController : ControllerBase
 {
-    private const string ReaderRoles = "HRAdmin,HRManager,Manager";
     private readonly IEvolutionReadRepository<JobMovementReadModel> _repository;
     private readonly ReadDbContext _readDbContext;
 
@@ -26,7 +26,7 @@ public class JobMovementsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = ReaderRoles)]
+    [Authorize(Roles = RoleConstants.EvolutionUsers)]
     [SwaggerOperation(Summary = "List job movements.")]
     public async Task<IActionResult> GetAll([FromQuery] PaginationRequest pagination, CancellationToken ct)
     {
@@ -36,7 +36,7 @@ public class JobMovementsController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    [Authorize(Roles = ReaderRoles)]
+    [Authorize(Roles = RoleConstants.EvolutionUsers)]
     [SwaggerOperation(Summary = "Get a job movement by ID.")]
     public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
     {
@@ -45,7 +45,7 @@ public class JobMovementsController : ControllerBase
     }
 
     [HttpGet("employee/{employeeId:guid}")]
-    [Authorize(Roles = ReaderRoles)]
+    [Authorize(Roles = RoleConstants.EvolutionUsers)]
     [SwaggerOperation(Summary = "List job movements for an employee.")]
     public async Task<IActionResult> GetByEmployee(Guid employeeId, CancellationToken ct)
         => Ok(BaseResponse<IReadOnlyList<JobMovementReadModel>>.Ok(await _repository.GetByEmployeeAsync(employeeId, ct)));

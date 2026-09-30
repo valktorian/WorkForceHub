@@ -1,4 +1,5 @@
 using Infrastructure.Api.Common;
+using Infrastructure.Api.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -14,7 +15,6 @@ namespace ProfileService.Query.Api.Controllers;
 [Authorize]
 public class ProfilesController : ControllerBase
 {
-    private const string HrRoles = "HRAdmin,HRManager";
     private readonly ReadDbContext _readDb;
     private readonly ILogger<ProfilesController> _logger;
 
@@ -25,7 +25,7 @@ public class ProfilesController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = HrRoles)]
+    [Authorize(Roles = RoleConstants.HrStaff)]
     [SwaggerOperation(Summary = "List profiles from the read model.")]
     public async Task<IActionResult> GetAll([FromQuery] PaginationRequest pagination, CancellationToken ct)
     {
@@ -55,13 +55,13 @@ public class ProfilesController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    [Authorize(Roles = HrRoles)]
+    [Authorize(Roles = RoleConstants.HrStaff)]
     [SwaggerOperation(Summary = "Get a profile by ID.")]
     public Task<IActionResult> GetById(Guid id, CancellationToken ct)
         => FindOne(x => x.Id == id, "Profile not found.", ct);
 
     [HttpGet("by-account/{accountId:guid}")]
-    [Authorize(Roles = HrRoles)]
+    [Authorize(Roles = RoleConstants.HrStaff)]
     [SwaggerOperation(Summary = "Get a profile by account ID.")]
     public Task<IActionResult> GetByAccount(Guid accountId, CancellationToken ct)
         => FindOne(x => x.AccountId == accountId, "Profile not found for account.", ct);

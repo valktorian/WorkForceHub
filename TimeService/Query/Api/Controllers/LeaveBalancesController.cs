@@ -22,7 +22,7 @@ public class LeaveBalancesController : ControllerBase
     }
 
     [HttpGet("{employeeId:guid}")]
-    [Authorize(Roles = RoleConstants.ManagerOrHrAdmin)]
+    [Authorize(Roles = RoleConstants.TimeReviewers)]
     [SwaggerOperation(Summary = "List leave balances for an employee.")]
     public async Task<IActionResult> GetByEmployee(Guid employeeId, CancellationToken ct)
         => Ok(BaseResponse<IReadOnlyList<LeaveBalanceReadModel>>.Ok(await _repository.GetByEmployeeAsync(employeeId, ct)));

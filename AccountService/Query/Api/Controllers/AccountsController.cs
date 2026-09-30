@@ -11,7 +11,7 @@ namespace AccountService.Query.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = RoleConstants.HrAdmin)]
+[Authorize(Roles = RoleConstants.AccountAdmins)]
 public class AccountsController : ControllerBase
 {
     private readonly ReadDbContext _readDb;

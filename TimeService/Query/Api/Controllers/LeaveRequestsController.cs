@@ -32,7 +32,7 @@ public class LeaveRequestsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = RoleConstants.ManagerOrHrAdmin)]
+    [Authorize(Roles = RoleConstants.TimeReviewers)]
     [SwaggerOperation(Summary = "List leave requests.")]
     public async Task<IActionResult> GetAll([FromQuery] PaginationRequest pagination, CancellationToken ct)
     {
@@ -43,13 +43,13 @@ public class LeaveRequestsController : ControllerBase
     }
 
     [HttpGet("by-employee/{employeeId:guid}")]
-    [Authorize(Roles = RoleConstants.ManagerOrHrAdmin)]
+    [Authorize(Roles = RoleConstants.TimeReviewers)]
     [SwaggerOperation(Summary = "List leave requests for an employee.")]
     public async Task<IActionResult> GetByEmployee(Guid employeeId, CancellationToken ct)
         => Ok(BaseResponse<IReadOnlyList<LeaveRequestReadModel>>.Ok(await _repository.GetByEmployeeAsync(employeeId, ct)));
 
     [HttpGet("pending-approval")]
-    [Authorize(Roles = RoleConstants.ManagerOrHrAdmin)]
+    [Authorize(Roles = RoleConstants.TimeReviewers)]
     [SwaggerOperation(Summary = "List leave requests pending approval.")]
     public async Task<IActionResult> GetPendingApproval([FromQuery] PaginationRequest pagination, CancellationToken ct)
     {

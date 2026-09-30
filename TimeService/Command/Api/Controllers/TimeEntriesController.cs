@@ -26,26 +26,26 @@ public class TimeEntriesController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = RoleConstants.EmployeeManagerOrHrAdmin)]
+    [Authorize(Roles = RoleConstants.TimeUsers)]
     [SwaggerOperation(Summary = "Create a time entry.")]
     public async Task<IActionResult> Create([FromBody] CreateTimeEntryCommand command, CancellationToken ct)
         => Ok(await _dispatcher.SendAsync<CreateTimeEntryCommand, CommandAcceptedResponse>(command, ct));
 
     [HttpPut("{id:guid}")]
-    [Authorize(Roles = RoleConstants.EmployeeManagerOrHrAdmin)]
+    [Authorize(Roles = RoleConstants.TimeUsers)]
     [SwaggerOperation(Summary = "Update a time entry.")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateTimeEntryCommand command, CancellationToken ct)
         => Ok(await _dispatcher.SendAsync<UpdateTimeEntryCommand, CommandAcceptedResponse>(command with { Id = id }, ct));
 
     [HttpDelete("{id:guid}")]
-    [Authorize(Roles = RoleConstants.EmployeeOrHrAdmin)]
+    [Authorize(Roles = RoleConstants.TimeEntryDeleters)]
     [SwaggerOperation(Summary = "Delete a time entry.")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {
         var command = new DeleteTimeEntryCommand(
             id,
             _currentUserAccessor.GetRequiredAccountId(),
-            User.IsInRole(RoleConstants.HrAdmin));
+            User.IsInAnyRole(RoleConstants.TimeAdmins));
 
         await _dispatcher.SendAsync<DeleteTimeEntryCommand, CommandAcceptedResponse>(command, ct);
         return NoContent();
