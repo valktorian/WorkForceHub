@@ -41,14 +41,20 @@ jobs:
         env:
           WORKFORCEHUB_API_BASE_URL: ${{ secrets.WORKFORCEHUB_API_BASE_URL }}
           SEED_ACCOUNT_PASSWORD: ${{ secrets.SEED_ACCOUNT_PASSWORD }}
+          SEED_ADMIN_EMAIL: ${{ secrets.SEED_ADMIN_EMAIL }}
+          SEED_ADMIN_PASSWORD: ${{ secrets.SEED_ADMIN_PASSWORD }}
         run: |
           test -n "$WORKFORCEHUB_API_BASE_URL" || (echo "Missing WORKFORCEHUB_API_BASE_URL repository secret." && exit 1)
           test -n "$SEED_ACCOUNT_PASSWORD" || (echo "Missing SEED_ACCOUNT_PASSWORD repository secret." && exit 1)
+          test -n "$SEED_ADMIN_EMAIL" || (echo "Missing SEED_ADMIN_EMAIL repository secret." && exit 1)
+          test -n "$SEED_ADMIN_PASSWORD" || (echo "Missing SEED_ADMIN_PASSWORD repository secret." && exit 1)
 
       - name: Run API smoke tests and seed data
         env:
           WORKFORCEHUB_API_BASE_URL: ${{ secrets.WORKFORCEHUB_API_BASE_URL }}
           SEED_ACCOUNT_PASSWORD: ${{ secrets.SEED_ACCOUNT_PASSWORD }}
+          SEED_ADMIN_EMAIL: ${{ secrets.SEED_ADMIN_EMAIL }}
+          SEED_ADMIN_PASSWORD: ${{ secrets.SEED_ADMIN_PASSWORD }}
           SEED_RUNS: ${{ inputs.seed_runs || '10' }}
           SEED_NAMESPACE: ${{ inputs.seed_namespace || 'demo-v1' }}
           SEED_CLEANUP_AFTER: ${{ inputs.cleanup_after || 'false' }}

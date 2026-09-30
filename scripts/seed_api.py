@@ -37,8 +37,10 @@ def main() -> int:
 
     assert_ok("OpenAPI document", lambda: request("GET", "/gateway-docs/v1/openapi.json"))
 
+    admin_token = login_admin()
+
     for index in range(1, SEED_RUNS + 1):
-        seed_employee(index)
+        seed_employee(index, admin_token)
 
     if CLEANUP_AFTER:
         cleanup_created_records()
@@ -47,11 +49,31 @@ def main() -> int:
     return 0
 
 
-def seed_employee(index: int) -> None:
+def login_admin() -> str:
+    if not SEED_ADMIN_EMAIL or not SEED_ADMIN_PASSWORD:
+        raise RuntimeError("SEED_ADMIN_EMAIL and SEED_ADMIN_PASSWORD are required to create seed accounts.")
+
+    login = request("POST", "/api/auth/login", body={
+        "email": SEED_ADMIN_EMAIL,
+        "password": SEED_ADMIN_PASSWORD,
+    })
+
+    if not login.ok:
+        raise RuntimeError(f"Could not login seed admin {SEED_ADMIN_EMAIL}: {login.status} {login.text}")
+
+    token = response_data(login).get("accessToken")
+    if not token:
+        raise RuntimeError(f"Login response for seed admin {SEED_ADMIN_EMAIL} did not include a token.")
+
+    print(f"Logged in as seed admin {SEED_ADMIN_EMAIL}")
+    return token
+
+
+def seed_employee(index: int, admin_token: str) -> None:
     suffix = uuid.uuid4().hex[:8] if RANDOM_MODE else f"{SEED_NAMESPACE}-{index:02d}"
     person = build_person(index, suffix)
 
-    created_account = create_account(person)
+    created_account = create_account(person, admin_token)
     if created_account.get("status") == "created":
         print(f"Created account {person['email']}")
     else:
@@ -91,13 +113,13 @@ def seed_employee(index: int) -> None:
     seed_domain_records(person, profile_id, token)
 
 
-def create_account(person: dict[str, Any]) -> dict[str, Any]:
-    response = request("POST", "/api/accounts", body={
+def create_account(person: dict[str, Any], admin_token: str) -> dict[str, Any]:
+    response = request("POST", "/api/accounts", token=admin_token, body={
         "email": person["email"],
         "password": SEED_PASSWORD,
         "firstName": person["firstName"],
         "lastName": person["lastName"],
-        "role": "HRAdmin",
+        "role": "HRViewer",
     })
 
     if response.ok:
@@ -471,6 +493,8 @@ BASE_URL = (os.getenv("WORKFORCEHUB_API_BASE_URL") or os.getenv("API_BASE_URL") 
 SEED_RUNS = int(os.getenv("SEED_RUNS") or "10")
 SEED_NAMESPACE = normalize_token(os.getenv("SEED_NAMESPACE") or "demo-v1")
 SEED_PASSWORD = os.getenv("SEED_ACCOUNT_PASSWORD") or "CHANGE_ME_DEMO_PASSWORD"
+SEED_ADMIN_EMAIL = os.getenv("SEED_ADMIN_EMAIL") or ""
+SEED_ADMIN_PASSWORD = os.getenv("SEED_ADMIN_PASSWORD") or ""
 RANDOM_MODE = (os.getenv("SEED_RANDOM") or "").lower() == "true"
 CLEANUP_AFTER = (os.getenv("SEED_CLEANUP_AFTER") or "false").lower() == "true"
 
