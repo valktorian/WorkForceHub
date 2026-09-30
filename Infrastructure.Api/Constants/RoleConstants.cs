@@ -8,19 +8,21 @@ public static class RoleConstants
     public const string Manager = "Manager";
     public const string HrManager = "HRManager";
     public const string HrAdmin = "HRAdmin";
+    public const string HrViewer = "HRViewer";
 
     public static readonly IReadOnlyList<string> All =
     [
         Employee,
         Manager,
         HrManager,
-        HrAdmin
+        HrAdmin,
+        HrViewer
     ];
 
     public const string AccountAdmins = HrAdmin;
-    public const string HrStaff = HrAdmin + "," + HrManager;
+    public const string HrStaff = HrAdmin + "," + HrViewer + "," + HrManager;
     public const string EvolutionUsers = HrStaff + "," + Manager;
-    public const string TimeAdmins = HrAdmin;
+    public const string TimeAdmins = HrAdmin + "," + HrViewer;
     public const string TimeReviewers = Manager + "," + TimeAdmins;
     public const string TimeUsers = Employee + "," + TimeReviewers;
     public const string TimeEntryDeleters = Employee + "," + TimeAdmins;
